@@ -1,6 +1,5 @@
 package bibliotheque;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +45,17 @@ public class Auteur {
 
     public void setLouvrage(List<Ouvrage> louvrage) {
         this.louvrage = louvrage;
+    }
+
+    public void addOuvrage(Ouvrage o){
+        louvrage.add(o);
+        o.getLauteurs().add(this);
+        //This => instance
+    }
+
+    public void supprimeOuvrage(Ouvrage o){
+        louvrage.remove(o);
+        o.getLauteurs().remove(this);
     }
 
     @Override

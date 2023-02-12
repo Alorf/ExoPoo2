@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Lecteur {
     private int numlecteur;
-    private  String nom,prenom;
+    private String nom,prenom;
     private LocalDate dn;
     private String adresse;
     private String mail;
@@ -87,6 +87,16 @@ public class Lecteur {
 
     public void setLloc(List<Location> lloc) {
         this.lloc = lloc;
+    }
+
+    public void addLocation(Location loc){
+        lloc.add(loc);
+        loc.setLoueur(this);
+    }
+
+    public void supprimeLocation(Location loc){
+        lloc.remove(loc);
+        loc.setLoueur(null);
     }
 
     @Override

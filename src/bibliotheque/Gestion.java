@@ -3,46 +3,28 @@ package bibliotheque;
 import java.time.LocalDate;
 
 public class Gestion {
-
-    /*
-	=> Créer un auteur
-	=> Créer un livre de cet auteur
-	=> Créer un rayon
-	=> Créer un exemplaire de ce livre dans le rayon
-	=> Créer un lecteur
-	=> Louer cet exemplaire à ce lecteur
-	=> Afficher les infos de tous les objets crées
-     */
-
-    /*
-        LocalDatge dt = LocalDate.of(2023,2,15);
-     */
     public static void main(String[] args) {
+        Auteur a = new Auteur("Verne","Jules","France");
+        Livre l = new Livre("Vingt mille lieues sous les mers",10, LocalDate.of(1880,1,1),1.50,"français","aventure","a125",350,TypeLivre.ROMAN,"histoire de sous-marin");
 
-        Auteur auteur = new Auteur("de Maupassant", "Guy", "Français");
-        Livre belami = new Livre("Bel-Ami", 17, LocalDate.of(2023,4,6), 7.79, "Français", "Fiction", "9782253009009", 441, TypeLivre.ROMAN, "Bel-Ami retrace l'itinéraire de Georges Duroy, un jeune soldat revenu de la guerre de la conquête de l'Algérie qui se retrouve sans le sou à son retour à Paris. Aidé par son ami Forestier, il rencontre un patron de presse qui l'emploie après lui avoir commandé un premier article sur l'Algérie.");
+        a.addOuvrage(l);
 
-        auteur.getLouvrage().add(belami);
-        //a.addOuvrage(belami);
+        Rayon r = new Rayon("r12","aventure");
+        Exemplaire e = new Exemplaire("m12","état neuf",l);
 
-        Rayon r = new Rayon("1234", "Fiction");
-        Exemplaire exemplaire = new Exemplaire("MAT1234", "Comme neuf", belami);
+        r.addExemplaire(e);
 
-        exemplaire.setRayon(r);
-        r.getLex().add(exemplaire);
+        Lecteur lec = new Lecteur(1,"Dupont","Jean",LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
+        Location loc = new Location(LocalDate.of(2023,2,1),LocalDate.of(2023,3,1),lec,e);
 
-        Lecteur lecteur = new Lecteur(1, "Fourchette", "Patrique", LocalDate.of(1975, 4, 15), "36 Rue du Mouton, 7000", "patrique.fourchette@gmail.com", "0472123456");
-        Location location = new Location(lecteur, exemplaire);
+        lec.addLocation(loc);
 
-        lecteur.getLloc().add(location);
-        exemplaire.getLloc().add(location);
-
-        System.out.println(auteur);
-        System.out.println(belami);
+        System.out.println(a);
+        System.out.println(l);
         System.out.println(r);
-        System.out.println(exemplaire);
-        System.out.println(lecteur);
-        System.out.println(location);
+        System.out.println(e);
+        System.out.println(lec);
+        System.out.println(loc);
 
     }
 }

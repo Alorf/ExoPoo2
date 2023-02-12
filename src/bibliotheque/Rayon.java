@@ -59,5 +59,15 @@ public class Rayon {
         this.lex = lex;
     }
 
+    public void addExemplaire(Exemplaire e){
+        lex.add(e);
+        e.setRayon(this);
+    }
+
+    public void supprimeExemplaire(Exemplaire e){
+        lex.remove(e);
+        e.setRayon(null);
+    }
+
 
 }

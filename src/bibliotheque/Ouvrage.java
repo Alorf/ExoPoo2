@@ -109,7 +109,6 @@ public abstract class Ouvrage {
                 ", prixLocation=" + prixLocation +
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
-                ", lauteurs=" + lauteurs +
                 '}';
     }
 }
