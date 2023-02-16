@@ -51,6 +51,13 @@ public class Livre extends Ouvrage{
     }
 
     @Override
+    public double amendeRetard(int njours) {
+        //TODO : Coder la méthode amendeRetard de Livre
+
+        return 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

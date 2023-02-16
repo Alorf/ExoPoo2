@@ -69,5 +69,9 @@ public class Rayon {
         e.setRayon(null);
     }
 
+    public void listerExamplaires(){
+        //TODO : Coder la méthode listerExamplaires
+
+    }
 
 }

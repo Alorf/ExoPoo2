@@ -89,14 +89,14 @@ public class Lecteur {
         this.lloc = lloc;
     }
 
-    public void addLocation(Location loc){
-        lloc.add(loc);
-        loc.setLoueur(this);
+    public void listerExemplairesEnLocation(){
+        //TODO : Coder la méthode listerExemplairesEnLocation
+
     }
 
-    public void supprimeLocation(Location loc){
-        lloc.remove(loc);
-        loc.setLoueur(null);
+    public void listerExemplairesLoues(){
+        //TODO : Coder la méthode listerExemplairesLoues
+
     }
 
     @Override

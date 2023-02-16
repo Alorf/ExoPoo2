@@ -16,7 +16,6 @@ public abstract class Ouvrage {
     protected List<Auteur> lauteurs=new ArrayList<>();
     protected List<Exemplaire> lex = new ArrayList<>();
 
-
     public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
         this.ageMin = ageMin;
@@ -98,6 +97,18 @@ public abstract class Ouvrage {
     public void setLex(List<Exemplaire> lex) {
         this.lex = lex;
     }
+
+    public void listerExemplaires(){
+        //TODO : Coder la méthode listerExemplaires
+
+    }
+
+    public void listerExemplaires(boolean enLocation){
+        //TODO : Coder la méthode listerExemplaires(boolean enLocation)
+
+    }
+
+    public abstract double amendeRetard(int njours);
 
     @Override
     public String toString() {

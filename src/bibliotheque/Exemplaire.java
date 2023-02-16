@@ -77,6 +77,53 @@ public class Exemplaire {
         this.lloc = lloc;
     }
 
+    public void modifierEtat(){
+        //TODO : Coder la méthode modifierEtat
+
+    }
+
+    public Lecteur lecteurActuel(){
+        //TODO : Coder la méthode lecteurActuel
+
+        return null;
+    }
+
+    public ArrayList<Lecteur> lecteurs(){
+        //TODO : Coder la méthode lecteurs
+
+        return null;
+    }
+
+    public void envoiMailLecteurActuel(Mail mail){
+        //TODO : Coder la méthode envoiMailLecteurActuel
+
+        return;
+    }
+
+    public void envoiMailLecteurs(Mail mail){
+        //TODO : Coder la méthode envoiMailLecteurs
+
+        return;
+    }
+
+    public boolean enRetard(){
+        //TODO : Coder la méthode enRetard
+
+        return false;
+    }
+
+    public int joursRetard(){
+        //TODO : Coder la méthode joursRetard
+
+        return 0;
+    }
+
+    public boolean enLocation(){
+        //TODO : Coder la méthode enLocation
+
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Exemplaire{" +
