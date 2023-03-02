@@ -1,4 +1,4 @@
-package bibliotheque;
+package metier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,28 +47,7 @@ public class Auteur {
         this.louvrage = louvrage;
     }
 
-    public void addOuvrage(Ouvrage o){
-        louvrage.add(o);
-        o.getLauteurs().add(this);
-        //This => instance
-    }
 
-    public void supprimeOuvrage(Ouvrage o){
-        louvrage.remove(o);
-        o.getLauteurs().remove(this);
-    }
-
-    public void listerOuvrages(){
-        //TODO : Coder la méthode listerOuvrages
-    }
-
-    public void listerOuvrages(TypeOuvrage typeOuvrage,TypeLivre typeLivre){
-        //TODO : Coder la méthode listerOuvrages(TypeOuvrage typeOuvrage,TypeLivre typeLivre)
-    }
-
-    public void listerOuvrage(String genre){
-        //TODO : Coder la méthode listerOuvrage(String genre)
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,5 +69,47 @@ public class Auteur {
                 ", prenom='" + prenom + '\'' +
                 ", nationalite='" + nationalite + '\'' +
                 '}';
+    }
+
+    public void addOuvrage(Ouvrage o ){
+        louvrage.add(o);
+        o.getLauteurs().add(this);
+    }
+
+    public void remove(Ouvrage o){
+        louvrage.remove(o);
+        o.getLauteurs().remove(this);
+    }
+
+    public List<Ouvrage> listerOuvrages(){
+        return louvrage;
+    }
+
+    public List<Ouvrage> listerOuvrages(TypeOuvrage to){
+        List<Ouvrage> temp = new ArrayList<>();
+        for (Ouvrage o : louvrage){
+            if (o.getTo().equals(to)){
+                temp.add(o);
+            }
+        }
+        return temp;
+    }
+    public List<Livre> listerLivres(TypeLivre tl){
+        List<Livre> temp = new ArrayList<>();
+        for (Ouvrage o : louvrage){
+            if (((Livre) o).getTl().equals(tl)){
+                temp.add((Livre) o);
+            }
+        }
+        return temp;
+    }
+    public List<Ouvrage> listerOuvrages(String genre){
+        List<Ouvrage> temp = new ArrayList<>();
+        for (Ouvrage o : louvrage){
+            if (o.getGenre().equalsIgnoreCase(genre)){
+                temp.add(o);
+            }
+        }
+        return temp;
     }
 }

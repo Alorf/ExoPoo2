@@ -1,5 +1,6 @@
-package bibliotheque;
+package metier;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,7 +15,6 @@ public class Location {
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
-
         this.loueur.getLloc().add(this);
         this.exemplaire.getLloc().add(this);
     }
@@ -22,6 +22,7 @@ public class Location {
     public Location(Lecteur loueur, Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.dateLocation=LocalDate.now();
     }
 
     public LocalDate getDateLocation() {
@@ -56,16 +57,6 @@ public class Location {
         this.exemplaire = exemplaire;
     }
 
-    public void calculerAmende(){
-        //TODO : Coder la méthode calculerAmende
-
-    }
-
-    public void enregistrerRetour(){
-        //TODO : Coder la méthode enregistrerRetour
-
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,5 +78,33 @@ public class Location {
                 ", loueur=" + loueur +
                 ", exemplaire=" + exemplaire +
                 '}';
+    }
+
+    public double calculerAmende(){
+        Ouvrage ouvrage = exemplaire.getOuvrage();
+
+        int bt = (int) Duration.between(dateLocation, LocalDate.now()).toDays();
+
+        if (ouvrage instanceof Livre){
+            if (bt > 15){
+                ouvrage.amendeRetard(bt-15);
+            }
+
+        }else if (ouvrage instanceof  CD){
+
+            if (bt > 7){
+                ouvrage.amendeRetard(bt-7);
+            }
+
+        }else if(ouvrage instanceof DVD){
+            if (bt > 3){
+                ouvrage.amendeRetard(bt-3);
+            }
+        }
+
+        return 0;
+    }
+    public void enregistrerRetour(){
+        this.dateRestitution = LocalDate.now();
     }
 }

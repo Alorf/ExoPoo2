@@ -1,4 +1,4 @@
-package bibliotheque;
+package metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Lecteur {
     private int numlecteur;
-    private String nom,prenom;
+    private  String nom,prenom;
     private LocalDate dn;
     private String adresse;
     private String mail;
@@ -89,16 +89,6 @@ public class Lecteur {
         this.lloc = lloc;
     }
 
-    public void listerExemplairesEnLocation(){
-        //TODO : Coder la méthode listerExemplairesEnLocation
-
-    }
-
-    public void listerExemplairesLoues(){
-        //TODO : Coder la méthode listerExemplairesLoues
-
-    }
-
     @Override
     public String toString() {
         return "Lecteur{" +
@@ -123,5 +113,23 @@ public class Lecteur {
     @Override
     public int hashCode() {
         return Objects.hash(numlecteur);
+    }
+
+    public List<Exemplaire> listerExemplairesEnLocation(){
+        List<Exemplaire> temp = new ArrayList<>();
+        for (Location loc : lloc){
+            if (loc.getExemplaire().enLocation()){
+                temp.add(loc.getExemplaire());
+            }
+        }
+        return temp;
+    }
+
+    public List<Exemplaire> listerExemplairesEnLoues(){
+        List<Exemplaire> temp = new ArrayList<>();
+        for (Location loc : lloc){
+            temp.add(loc.getExemplaire());
+        }
+        return temp;
     }
 }

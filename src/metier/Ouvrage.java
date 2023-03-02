@@ -1,4 +1,4 @@
-package bibliotheque;
+package metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ public abstract class Ouvrage {
 
     protected List<Auteur> lauteurs=new ArrayList<>();
     protected List<Exemplaire> lex = new ArrayList<>();
+
 
     public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
@@ -98,18 +99,8 @@ public abstract class Ouvrage {
         this.lex = lex;
     }
 
-    public void listerExemplaires(){
-        //TODO : Coder la méthode listerExemplaires
-
-    }
-
-    public void listerExemplaires(boolean enLocation){
-        //TODO : Coder la méthode listerExemplaires(boolean enLocation)
-
-    }
 
     public abstract double amendeRetard(int njours);
-
     @Override
     public String toString() {
         return "Ouvrage{" +
@@ -121,5 +112,36 @@ public abstract class Ouvrage {
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
+    }
+    public void addAuteur(Auteur a ){
+        lauteurs.add(a);
+        a.getLouvrage().add(this);
+    }
+
+    public void remove(Auteur a){
+        lauteurs.remove(a);
+        a.getLouvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire e){
+        lex.add(e);
+        e.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire e){
+        lex.remove(e);
+        e.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplaires(){
+        return lex;
+    }
+
+    public List<Exemplaire>listerExemplaires(boolean enLocation){
+        List<Exemplaire> temp = new ArrayList<>();
+        for(Exemplaire ex : lex){
+            if (ex.enLocation()){
+                temp.add(ex);
+            }
+        }
+        return temp;
     }
 }

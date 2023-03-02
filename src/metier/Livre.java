@@ -1,4 +1,4 @@
-package bibliotheque;
+package metier;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -51,13 +51,6 @@ public class Livre extends Ouvrage{
     }
 
     @Override
-    public double amendeRetard(int njours) {
-        //TODO : Coder la méthode amendeRetard de Livre
-
-        return 0;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -66,8 +59,8 @@ public class Livre extends Ouvrage{
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(isbn);
+    public double amendeRetard(int njours) {
+        return njours;
     }
 
     @Override
@@ -78,5 +71,10 @@ public class Livre extends Ouvrage{
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
                 "} " + super.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
     }
 }
