@@ -1,4 +1,4 @@
-package metier;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -116,20 +116,19 @@ public class Lecteur {
     }
 
     public List<Exemplaire> listerExemplairesEnLocation(){
-        List<Exemplaire> temp = new ArrayList<>();
-        for (Location loc : lloc){
-            if (loc.getExemplaire().enLocation()){
-                temp.add(loc.getExemplaire());
-            }
+        List<Exemplaire> lex = new ArrayList<>();
+        for(Location loc : lloc){
+            if(loc.getDateRestitution()!=null)lex.add(loc.getExemplaire());
         }
-        return temp;
+        return lex;
     }
 
-    public List<Exemplaire> listerExemplairesEnLoues(){
-        List<Exemplaire> temp = new ArrayList<>();
-        for (Location loc : lloc){
-            temp.add(loc.getExemplaire());
+    public List<Exemplaire> listerExemplairesLoues(){
+        List<Exemplaire> lex = new ArrayList<>();
+        for(Location loc : lloc){
+            lex.add(loc.getExemplaire());
+            //TODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
         }
-        return temp;
+       return lex;
     }
 }

@@ -1,4 +1,4 @@
-package metier;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -59,8 +59,19 @@ public class Livre extends Ouvrage{
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
+    }
+
+    @Override
     public double amendeRetard(int njours) {
-        return njours;
+
+        return njours*0.25;
+    }
+
+    @Override
+    public int njlocmax() {
+        return 15;
     }
 
     @Override
@@ -70,11 +81,6 @@ public class Livre extends Ouvrage{
                 ", nbrePages=" + nbrePages +
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
-                "} " + super.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(isbn);
+                "} " ;
     }
 }

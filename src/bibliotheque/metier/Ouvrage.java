@@ -1,4 +1,4 @@
-package metier;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,6 +101,9 @@ public abstract class Ouvrage {
 
 
     public abstract double amendeRetard(int njours);
+
+    public abstract int njlocmax();
+
     @Override
     public String toString() {
         return "Ouvrage{" +
@@ -136,12 +139,10 @@ public abstract class Ouvrage {
     }
 
     public List<Exemplaire>listerExemplaires(boolean enLocation){
-        List<Exemplaire> temp = new ArrayList<>();
+        List<Exemplaire> lex2 = new ArrayList<>();
         for(Exemplaire ex : lex){
-            if (ex.enLocation()){
-                temp.add(ex);
-            }
+            if(ex.enLocation()==enLocation) lex2.add(ex);
         }
-        return temp;
+        return lex2;
     }
 }

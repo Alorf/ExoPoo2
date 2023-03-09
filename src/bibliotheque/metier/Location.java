@@ -1,7 +1,7 @@
-package metier;
+package bibliotheque.metier;
 
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Location {
@@ -81,30 +81,17 @@ public class Location {
     }
 
     public double calculerAmende(){
-        Ouvrage ouvrage = exemplaire.getOuvrage();
-
-        int bt = (int) Duration.between(dateLocation, LocalDate.now()).toDays();
-
-        if (ouvrage instanceof Livre){
-            if (bt > 15){
-                ouvrage.amendeRetard(bt-15);
-            }
-
-        }else if (ouvrage instanceof  CD){
-
-            if (bt > 7){
-                ouvrage.amendeRetard(bt-7);
-            }
-
-        }else if(ouvrage instanceof DVD){
-            if (bt > 3){
-                ouvrage.amendeRetard(bt-3);
-            }
-        }
-
+         if(dateRestitution!=null){
+           LocalDate dateLim = dateLocation.plusDays(exemplaire.getOuvrage().njlocmax());
+           if(dateRestitution.isAfter(dateLim)){
+               int njretard = (int)ChronoUnit.DAYS.between(dateLim, dateRestitution);
+               return exemplaire.getOuvrage().amendeRetard(njretard);
+           }
+       }
         return 0;
     }
+
     public void enregistrerRetour(){
-        this.dateRestitution = LocalDate.now();
+       if(dateRestitution==null) dateRestitution=LocalDate.now();//test sur nul pour éviter d'enregistrer retour 2 fois
     }
 }
