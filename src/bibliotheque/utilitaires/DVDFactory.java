@@ -22,13 +22,21 @@ public class DVDFactory extends OuvrageFactory{
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            dvd.getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+            if (dvd.getAutresLangues().contains(langues.get(choix-1))){
+                System.out.println("Le dvd contiens déjà cette langue");
+            }else{
+                dvd.getAutresLangues().add(langues.get(choix-1));
+            }
         }while(true);
         System.out.println("sous-titres");
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            dvd.getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
+            if (dvd.getSousTitres().contains(langues.get(choix-1))){
+                System.out.println("Le dvd contiens déjà ces sous-titres");
+            }else{
+                dvd.getSousTitres().add(langues.get(choix-1));
+            }
         }while(true);
         return dvd;
     }
