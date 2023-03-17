@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
-//on a ôté static pour les listes qui n'est plus nécessaire
+    //on a ôté static pour les listes qui n'est plus nécessaire
     private List<Auteur> laut = new ArrayList<>();
     private List<Lecteur> llect = new ArrayList<>();
     private List<Ouvrage> louv= new ArrayList<>();
@@ -38,7 +38,7 @@ public class Gestion {
 
         a.addOuvrage(d);
 
-         a = new Auteur("Kubrick","Stanley","GB");
+        a = new Auteur("Kubrick","Stanley","GB");
         laut.add(a);
 
         a.addOuvrage(d);
@@ -80,8 +80,8 @@ public class Gestion {
 
     private void menu() {
         List options = new ArrayList<>(Arrays.asList("auteurs","ouvrages","exemplaires","rayons","lecteurs","locations","restitution","fin"));
-      do{
-        int choix = Utilitaire.choixListe(options);
+        do{
+            int choix = Utilitaire.choixListe(options);
 
             switch (choix){
                 case 1 :gestAuteurs(); break;
@@ -123,7 +123,12 @@ public class Gestion {
                 temp.add(exemplaire);
             }
         }
-        temp.sort(new ExemplaireComparator());
+        temp.sort(new Comparator<Exemplaire>() {
+            @Override
+            public int compare(Exemplaire e1, Exemplaire e2) {
+                return e1.getMatricule().compareTo(e2.getMatricule());
+            }
+        });
 
         choix = Utilitaire.choixListe(temp);
 
@@ -313,7 +318,7 @@ public class Gestion {
 
     }
 
-       private void gestAuteurs() {
+    private void gestAuteurs() {
         System.out.println("nom ");
         String nom=sc.nextLine();
         System.out.println("prénom ");
@@ -332,5 +337,5 @@ public class Gestion {
         g.menu();
     }
 
-  
+
 }
