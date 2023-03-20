@@ -29,6 +29,20 @@ public class LecteurPresenter {
         view.setListDatas(lecteurs);
     }
 
+    public void updateLecteur(Lecteur lecteur){
+        boolean ok = model.updateLecteur(lecteur);
+
+        if (ok){
+            view.affMsg("Modification effectuée");
+            List<Lecteur> lecteurs = model.getLecteurs();
+            view.setListDatas(lecteurs);
+
+        }else{
+            view.affMsg("Pas de modification à effectuer");
+        }
+
+    }
+
 
     public void removeLecteur(Lecteur lecteur) {
         boolean ok = model.removeLecteur(lecteur);

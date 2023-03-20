@@ -37,6 +37,9 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     public void menu() {
+
+
+
         List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "modifier", "fin"));
         do {
             int ch = Utilitaire.choixListe(options);
@@ -58,11 +61,67 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void modifier() {
-        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
+        //Choisir un lecteur
+        Lecteur lecteur = llec.get(Utilitaire.choixListe(llec)-1);
+
+        String nom = lecteur.getNom();
+        String prenom = lecteur.getPrenom();
+        LocalDate dn = lecteur.getDn();
+        String adresse = lecteur.getAdresse();
+        String mail = lecteur.getMail();
+        String tel = lecteur.getTel();
+
+        String menu[] = {
+                "Nom",
+                "Prénom",
+                "Date de naissance",
+                "Adresse",
+                "Mail",
+                "Téléphone",
+                "Sortir",
+        };
+
+        int choix = 0;
+
+        //Choisir la modification
+        do{
+            choix = Utilitaire.choixListe(new ArrayList(Arrays.asList(menu)));
+
+            switch (choix){
+                case 1 -> {
+                    nom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le nouveau nom");
+                }
+                case 2 -> {
+                    prenom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le nouveau prénom");
+                }
+                case 3 -> {
+                    dn = Utilitaire.lecDate();
+                }
+                case 4 -> {
+                    adresse = Utilitaire.regex("[a-zA-Z 0-9]+", "Entrez la nouvelle adresse");
+                }
+                case 5 -> {
+                    mail = Utilitaire.regex("[a-zA-Z@.]+", "Entrez le nouveau mail");
+                }
+                case 6 -> {
+                    tel = Utilitaire.regex("[0-9]+", "Entrez le nouveau tel");
+                }
+            }
+        }while(choix != 7);
+        System.out.println("Va etre modifier" + lecteur);
+
+        lecteur.setNom(nom);
+        lecteur.setPrenom(prenom);
+        lecteur.setDn(dn);
+        lecteur.setAdresse(adresse);
+        lecteur.setMail(mail);
+        lecteur.setTel(tel);
+
+        presenter.updateLecteur(lecteur);
     }
 
     private void retirer() {
-        int choix = Utilitaire.choixElt(llec);
+        int choix = Utilitaire.choixListe(llec);
         Lecteur lecteur = llec.get(choix-1);
         presenter.removeLecteur(lecteur);
     }

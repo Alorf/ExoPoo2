@@ -22,6 +22,16 @@ public class LecteurModel implements DAOLecteur {
     }
 
     @Override
+    public boolean updateLecteur(Lecteur newLecteur) {
+        int index = lecteurs.indexOf(newLecteur);
+        if (index != -1) {
+            lecteurs.set(index, newLecteur);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean removeLecteur(Lecteur lec) {
         return lecteurs.remove(lec);
     }
