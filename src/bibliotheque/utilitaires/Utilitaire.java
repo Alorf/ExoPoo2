@@ -2,28 +2,15 @@ package bibliotheque.utilitaires;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
 public class Utilitaire {
-    private static Scanner reader = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
     public static int choixListe(List l){
-        affListe(l);
-        return choixElt(l);
-    }
-
-    public static String regex(String regex, String msg) {
-        String chaine;
-        msg = msg.endsWith(" ") ? msg : msg + " ";
-        do {
-            System.out.printf(msg);
-            chaine = reader.nextLine();
-            if (!chaine.matches(regex)) {
-                System.out.println("Recommencez !");
-            }
-        } while (!chaine.matches(regex));
-
-        return chaine;
+       affListe(l);
+       return choixElt(l);
     }
 
     public static void affListe(List l){
@@ -36,47 +23,54 @@ public class Utilitaire {
     public static int choixElt(List l){
         int choix;
         do {
-            choix = Integer.parseInt(regex("[0-9]+", "Choix : "));
-            if (choix <1 || choix > l.size()){
-                System.out.println("Mauvaise entrée");
-            }
+            System.out.println("choix :");
+            choix = sc.nextInt();
+            sc.skip("\n");
         } while(choix <1 || choix > l.size());
         return choix;
     }
 
     public static LocalDate lecDate(){
-        String splitBy = "";
-        String date = regex("^((0[1-9]|1[0-2])[\\/ ]){2}[0-9]{2,4}$", "Entrez la date : ");
-        String[] jma = null;
-
-        if (date.contains("/")){
-            splitBy = "/";
-        }
-
-        jma = date.split(splitBy);
-
+        String[] jma = sc.nextLine().split(" ");
         int j = Integer.parseInt(jma[0]);
         int m = Integer.parseInt(jma[1]);
         int a = Integer.parseInt(jma[2]);
-
         return LocalDate.of(a,m,j);
     }
 
     public static LocalTime lecTime(){
-        String splitBy = " ";
-        String heure = regex("^[0-9]{1,2}[:][0-9]{2}[:][0-9]{2}$", "Entrez l'heure : ");
-        String[] hms = null;
-
-        if (heure.contains(":")){
-            splitBy = ":";
-        }
-
-        hms = heure.split(splitBy);
-
+        String[] hms = sc.nextLine().split(" ");
         int h = Integer.parseInt(hms[0]);
         int m = Integer.parseInt(hms[1]);
         int s = Integer.parseInt(hms[2]);
-
         return LocalTime.of(h,m,s);
     }
+
+    public static String getDateFrench(LocalDate d){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
+        return dtf.format(d);
+    }
+
+    public static String modifyIfNotBlank(String label,String oldValue){
+        System.out.println(label+" : "+oldValue);
+        System.out.print("nouvelle valeur (enter si pas de changement) : ");
+        String newValue= sc.nextLine();
+        if(newValue.isBlank()) return oldValue;
+        return newValue;
+    }
+
+    public static String regex(String regex, String msg) {
+        String chaine;
+        msg = msg.endsWith(" ") ? msg : msg + " ";
+        do {
+            System.out.printf(msg);
+            chaine = sc.nextLine();
+            if (!chaine.matches(regex)) {
+                System.out.println("Recommencez !");
+            }
+        } while (!chaine.matches(regex));
+
+        return chaine;
+    }
+
 }

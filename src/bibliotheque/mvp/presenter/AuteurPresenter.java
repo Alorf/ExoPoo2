@@ -1,8 +1,12 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.Auteur;
-import bibliotheque.mvp.model.DAOAuteur;
-import bibliotheque.mvp.view.AuteurViewInterface;
+import bibliotheque.metier.Ouvrage;
+import bibliotheque.metier.TypeLivre;
+import bibliotheque.metier.TypeOuvrage;
+import bibliotheque.mvp.model.auteur.DAOAuteur;
+import bibliotheque.mvp.model.auteur.SpecialAuteur;
+import bibliotheque.mvp.view.auteur.AuteurViewInterface;
 
 import java.util.List;
 
@@ -17,38 +21,58 @@ public class AuteurPresenter {
     }
 
     public void start() {
-        List<Auteur> auts = model.getAuteurs();
-        view.setListDatas(auts);
+       view.setListDatas(getAll());
     }
 
-    public void addAuteur(Auteur aut) {
-        Auteur auteur = model.addAuteur(aut);
-        if(auteur!=null) view.affMsg("création de :"+auteur);
+    public List<Auteur> getAll(){
+        return model.getAuteurs();
+    }
+
+    public void addAuteur(Auteur auteur) {
+        Auteur lec = model.addAuteur(auteur);
+        if(lec!=null) view.affMsg("création de :"+lec);
         else view.affMsg("erreur de création");
-        List<Auteur> Auteurs = model.getAuteurs();
-        view.setListDatas(Auteurs);
-    }
-
-    public void updateAuteur(Auteur Auteur){
-        boolean ok = model.updateAuteur(Auteur);
-
-        if (ok){
-            view.affMsg("Modification effectuée");
-            List<Auteur> Auteurs = model.getAuteurs();
-            view.setListDatas(Auteurs);
-
-        }else{
-            view.affMsg("Pas de modification à effectuer");
-        }
-
+       // List<Auteur> auteurs = model.getAuteurs();
+       // view.setListDatas(auteurs); //désactivé pour éviter appels imbriqués
     }
 
 
-    public void removeAuteur(Auteur Auteur) {
-        boolean ok = model.removeAuteur(Auteur);
-        if(ok) view.affMsg("Auteur effacé");
-        else view.affMsg("Auteur non effacé");
-        List<Auteur> Auteurs = model.getAuteurs();
-        view.setListDatas(Auteurs);
+    public void removeAuteur(Auteur auteur) {
+        boolean ok = model.removeAuteur(auteur);
+        if(ok) view.affMsg("auteur effacé");
+        else view.affMsg("auteur non effacé");
+        //List<Auteur> auteurs = model.getAuteurs();
+        //view.setListDatas(auteurs); //désactivé pour éviter appels imbriqués
+    }
+    public void update(Auteur auteur) {
+        Auteur l  =model.updateAuteur(auteur);
+        if(l==null) view.affMsg("mise à jour infrucueuse");
+        else view.affMsg("mise à jour effectuée : "+l);
+        //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
+    }
+
+    public void search(Auteur auteur) {
+        Auteur l = model.readAuteur(auteur);
+        if(l==null) view.affMsg("recherche infructueuse");
+        else view.affMsg(l.toString());
+    }
+
+
+    public void listerOuvrages(Auteur auteur) {
+        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur);
+        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
+        else view.affList(louv);
+    }
+
+    public void listerOuvrage(Auteur auteur, TypeOuvrage to, TypeLivre tl) {
+        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur, to, tl);
+        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
+        else view.affList(louv);
+    }
+
+    public void listerOuvrage(Auteur auteur, String genre) {
+        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur, genre);
+        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
+        else view.affList(louv);
     }
 }

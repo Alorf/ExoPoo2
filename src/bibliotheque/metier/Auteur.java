@@ -96,7 +96,7 @@ public class Auteur {
         }
         return lot;
     }
-    public List<Livre> listerLivres(TypeLivre tl){
+    public List<Ouvrage> listerLivres(TypeLivre tl){
         List<Livre>ll = new ArrayList<>();
         for(Ouvrage o : louvrage){
             if(o.getTo().equals(LIVRE)) {

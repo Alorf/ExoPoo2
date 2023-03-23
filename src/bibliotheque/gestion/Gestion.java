@@ -5,11 +5,14 @@ import bibliotheque.utilitaires.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
-    //on a ôté static pour les listes qui n'est plus nécessaire
+//on a ôté static pour les listes qui n'est plus nécessaire
     private List<Auteur> laut = new ArrayList<>();
     private List<Lecteur> llect = new ArrayList<>();
     private List<Ouvrage> louv= new ArrayList<>();
@@ -38,7 +41,7 @@ public class Gestion {
 
         a.addOuvrage(d);
 
-        a = new Auteur("Kubrick","Stanley","GB");
+         a = new Auteur("Kubrick","Stanley","GB");
         laut.add(a);
 
         a.addOuvrage(d);
@@ -80,8 +83,8 @@ public class Gestion {
 
     private void menu() {
         List options = new ArrayList<>(Arrays.asList("auteurs","ouvrages","exemplaires","rayons","lecteurs","locations","restitution","fin"));
-        do{
-            int choix = Utilitaire.choixListe(options);
+      do{
+        int choix = Utilitaire.choixListe(options);
 
             switch (choix){
                 case 1 :gestAuteurs(); break;
@@ -97,42 +100,18 @@ public class Gestion {
     }
 
     private void gestRestitution() {
-        List<Exemplaire> temp = new ArrayList<>();
-        for(Exemplaire exemplaire : lex){
-            if (exemplaire.enLocation()){
-                temp.add(exemplaire);
-            }
-        }
-
-        int i = 0;
-        for (Exemplaire exemplaire : temp){
-            System.out.println(i+1 + ". " + exemplaire.getOuvrage().getTitre());
-            i++;
-        }
-
-        int choix = Utilitaire.choixListe(temp) - 1;
-
-        temp.get(choix).getLloc().get(temp.get(choix).getLloc().size()-1).setDateRestitution(LocalDate.now());
+        //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
     }
 
     private void gestLocations() {
         int choix;
-        List<Exemplaire> temp = new ArrayList<>();
-        for (Exemplaire exemplaire : lex){
-            if (!exemplaire.enLocation()){
-                temp.add(exemplaire);
-            }
+        //TODO ne lister que les exemplaires libres et les trier par matricule
+        choix = Utilitaire.choixListe(lex);
+        if(lex.get(choix-1).enLocation()){
+            System.out.println("exemplaire en location");
+            return;
         }
-        temp.sort(new Comparator<Exemplaire>() {
-            @Override
-            public int compare(Exemplaire e1, Exemplaire e2) {
-                return e1.getMatricule().compareTo(e2.getMatricule());
-            }
-        });
-
-        choix = Utilitaire.choixListe(temp);
-
-        Exemplaire ex = temp.get(choix-1);
+        Exemplaire ex = lex.get(choix-1);
         choix=Utilitaire.choixListe(llect);
         Lecteur lec = llect.get(choix-1);
         lloc.add(new Location(lec,ex));
@@ -172,23 +151,7 @@ public class Gestion {
         Rayon r = new Rayon(code,genre);
         System.out.println("rayon créé");
 
-        lex.sort(new Comparator<Exemplaire>() {
-            @Override
-            public int compare(Exemplaire o1, Exemplaire o2) {
-                return o1.getOuvrage().getTitre().compareTo(o2.getOuvrage().getTitre());
-            }
-        });
-
-        int choix = Utilitaire.choixListe(lex);
-
-        Exemplaire exemplaire = lex.get(choix-1);
-
-        if (r.getLex().contains(exemplaire)){
-            System.out.println("L'exemplaire existe déjà dans cette liste");
-            return;
-        }
-
-        r.getLex().add(exemplaire);
+        //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
     }
 
     private void gestExemplaires() {
@@ -201,21 +164,7 @@ public class Gestion {
         Exemplaire ex = new Exemplaire(mat,etat,louv.get(choix-1));
         lex.add(ex);
         System.out.println("exemplaire créé");
-        lrayon.sort(new Comparator<Rayon>() {
-            @Override
-            public int compare(Rayon o1, Rayon o2) {
-                return o1.getCodeRayon().compareTo(o2.getCodeRayon());
-            }
-        });
-
-        choix = Utilitaire.choixListe(lrayon);
-
-        if (lrayon.get(choix-1).getLex().contains(ex)){
-            System.out.println("Le rayon contient déjà sont exemplaire");
-            return;
-        }
-
-        lrayon.get(choix-1).addExemplaire(ex);
+        //TODO attribuer rayon , les rayons sont triès par ordre de code
     }
 
     private void gestOuvrages() {
@@ -257,7 +206,8 @@ public class Gestion {
                             System.out.println("code : ");
                             long code= sc.nextLong();
                             System.out.println("nombre de plages :");
-                            byte nbrePlages= sc.nextByte();
+                            byte nbrePlages= sc.nextByte();sc.skip("\n");
+                            System.out.println("durée en H M S : ");
                             LocalTime dureeTotale = Utilitaire.lecTime();
                             o=new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
                             ;break;
@@ -299,26 +249,10 @@ public class Gestion {
         o = lof.get(choix-1).create();
         louv.add(o);
         System.out.println("ouvrage créé");
-        laut.sort(new Comparator<Auteur>() {
-            @Override
-            public int compare(Auteur o1, Auteur o2) {
-                String t1 = o1.getNom() + " " + o1.getPrenom();
-                String t2 = o2.getNom() + " " + o2.getPrenom();
-                return t1.compareTo(t2);
-            }
-        });
-
-        choix = Utilitaire.choixListe(laut);
-
-        if (louv.get(louv.size()-1).getLauteurs().contains(laut.get(choix-1))){
-            System.out.println("L'auteur est déjà attribuer au livre");
-            return;
-        }
-        louv.get(louv.size()-1).addAuteur(laut.get(choix-1));
-
+        //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
     }
 
-    private void gestAuteurs() {
+       private void gestAuteurs() {
         System.out.println("nom ");
         String nom=sc.nextLine();
         System.out.println("prénom ");
@@ -337,5 +271,5 @@ public class Gestion {
         g.menu();
     }
 
-
+  
 }

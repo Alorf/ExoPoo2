@@ -14,7 +14,7 @@ public class DVDFactory extends OuvrageFactory{
         System.out.println("code : ");
         long code= sc.nextLong();
         LocalTime dureeTotale=Utilitaire.lecTime();
-        byte nbreBonus= sc.nextByte();
+        byte nbreBonus= sc.nextByte();sc.skip("\n");
         DVD dvd =new DVD(titre,ageMin,dateParution,prixLocation,langue,genre,code,dureeTotale,nbreBonus);
         System.out.println("autres langues");
         List<String> langues = new ArrayList<>(Arrays.asList("anglais","français","italien","allemand","fin"));
@@ -22,21 +22,13 @@ public class DVDFactory extends OuvrageFactory{
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            if (dvd.getAutresLangues().contains(langues.get(choix-1))){
-                System.out.println("Le dvd contiens déjà cette langue");
-            }else{
-                dvd.getAutresLangues().add(langues.get(choix-1));
-            }
+            dvd.getAutresLangues().add(langues.get(choix-1));//TODO gérer msg d'erreur en cas de doublon
         }while(true);
         System.out.println("sous-titres");
         do{
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            if (dvd.getSousTitres().contains(langues.get(choix-1))){
-                System.out.println("Le dvd contiens déjà ces sous-titres");
-            }else{
-                dvd.getSousTitres().add(langues.get(choix-1));
-            }
+            dvd.getSousTitres().add(langues.get(choix-1));//TODO gérer msg d'erreur en cas de doublon
         }while(true);
         return dvd;
     }

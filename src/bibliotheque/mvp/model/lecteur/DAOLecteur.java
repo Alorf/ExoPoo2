@@ -1,4 +1,4 @@
-package bibliotheque.mvp.model;
+package bibliotheque.mvp.model.lecteur;
 
 import bibliotheque.metier.Lecteur;
 
@@ -7,9 +7,10 @@ import java.util.List;
 public interface DAOLecteur {
     Lecteur addLecteur(Lecteur lec);
 
-    boolean updateLecteur(Lecteur lecteur);
-
     boolean removeLecteur(Lecteur lec);
+    Lecteur updateLecteur(Lecteur lecteur);
+
+    Lecteur readLecteur(int idLecteur);
 
     List<Lecteur> getLecteurs();
 }

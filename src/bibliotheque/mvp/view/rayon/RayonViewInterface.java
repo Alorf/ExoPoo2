@@ -1,5 +1,6 @@
-package bibliotheque.mvp.view;
+package bibliotheque.mvp.view.rayon;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Rayon;
 import bibliotheque.mvp.presenter.RayonPresenter;
 
@@ -13,4 +14,5 @@ public interface RayonViewInterface {
     public void affMsg(String msg);
 
 
+    void affList(List<Exemplaire> lray);
 }
