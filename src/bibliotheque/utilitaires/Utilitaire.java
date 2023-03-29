@@ -23,9 +23,7 @@ public class Utilitaire {
     public static int choixElt(List l){
         int choix;
         do {
-            System.out.println("choix :");
-            choix = sc.nextInt();
-            sc.skip("\n");
+            choix = Integer.parseInt(regex("[0-9]+", "Choix : "));
         } while(choix <1 || choix > l.size());
         return choix;
     }
