@@ -2,12 +2,13 @@ package bibliotheque.mvp.model.lecteur;
 
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
+import bibliotheque.mvp.model.DAO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecteurModel implements DAOLecteur,SpecialLecteur {
+public class LecteurModel implements DAO<Lecteur>,SpecialLecteur {
     private int numcli = 0;
     private List<Lecteur> lecteurs = new ArrayList<>();
 
@@ -15,7 +16,7 @@ public class LecteurModel implements DAOLecteur,SpecialLecteur {
         populate();
     }
     @Override
-    public Lecteur addLecteur(Lecteur lec) {
+    public Lecteur add(Lecteur lec) {
         boolean present = lecteurs.contains(lec);
         if (!present) {
             numcli++;
@@ -26,12 +27,12 @@ public class LecteurModel implements DAOLecteur,SpecialLecteur {
     }
 
     @Override
-    public boolean removeLecteur(Lecteur lec) {
+    public boolean remove(Lecteur lec) {
         return lecteurs.remove(lec);
     }
 
     @Override
-    public Lecteur updateLecteur(Lecteur lecteur) {
+    public Lecteur update(Lecteur lecteur) {
         //int idLecteur = lecteur.getNumlecteur();
         int p = lecteurs.indexOf(lecteur);
         if (p < 0) return null;
@@ -40,7 +41,12 @@ public class LecteurModel implements DAOLecteur,SpecialLecteur {
     }
 
     @Override
-    public Lecteur readLecteur(int idLecteur) {
+    public Lecteur read(Lecteur object) {
+        return null;
+    }
+
+    @Override
+    public Lecteur read(int idLecteur) {
         for (Lecteur l : lecteurs) {
             if (l.getNumlecteur() == idLecteur) return l;
         }
@@ -48,15 +54,15 @@ public class LecteurModel implements DAOLecteur,SpecialLecteur {
     }
 
     @Override
-    public List<Lecteur> getLecteurs() {
+    public List<Lecteur> getAll() {
         return lecteurs;
     }
 
     private void populate(){
         Lecteur lec = new Lecteur(0,"Dupont","Jean", LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
-        addLecteur(lec);
+        add(lec);
         lec = new Lecteur(0,"Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
-        addLecteur(lec);
+        add(lec);
     }
 
     @Override

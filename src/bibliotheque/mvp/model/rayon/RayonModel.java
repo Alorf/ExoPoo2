@@ -2,35 +2,38 @@ package bibliotheque.mvp.model.rayon;
 
 import bibliotheque.metier.Rayon;
 import bibliotheque.metier.Exemplaire;
+import bibliotheque.mvp.model.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class RayonModel implements DAORayon, SpecialRayon {
+public class RayonModel implements DAO<Rayon>, SpecialRayon {
     private int codeRayon = 0;
     private List<Rayon> rayons = new ArrayList<>();
 
-    public RayonModel(){
+    public RayonModel() {
         populate();
     }
+
     @Override
-    public Rayon addRayon(Rayon rayon) {
+    public Rayon add(Rayon rayon) {
         boolean present = rayons.contains(rayon);
         if (!present) {
             codeRayon++;
-            rayon.setCodeRayon("R"+codeRayon);
+            rayon.setCodeRayon("R" + codeRayon);
             rayons.add(rayon);
             return rayon;
         } else return null;
     }
 
     @Override
-    public boolean removeRayon(Rayon rayon) {
+    public boolean remove(Rayon rayon) {
         return rayons.remove(rayon);
     }
 
     @Override
-    public Rayon updateRayon(Rayon rayon) {
+    public Rayon update(Rayon rayon) {
         //int idRayon = rayon.getNumrayon();
         int p = rayons.indexOf(rayon);
         if (p < 0) return null;
@@ -39,27 +42,40 @@ public class RayonModel implements DAORayon, SpecialRayon {
     }
 
     @Override
-    public Rayon readRayon(String codeRayon) {
+    public Rayon read(Rayon object) {
         for (Rayon l : rayons) {
-            if (l.getCodeRayon().equals(codeRayon)) return l;
+            if (l.equals(codeRayon)) return l;
         }
         return null;
     }
 
     @Override
-    public List<Rayon> getRayons() {
+    public List<Rayon> getAll() {
         return rayons;
     }
 
-    private void populate(){
+    private void populate() {
         Rayon rayon = new Rayon("t1", "Science");
-        addRayon(rayon);
+        add(rayon);
         rayon = new Rayon("t2", "Programmation");
-        addRayon(rayon);
+        add(rayon);
     }
 
     @Override
     public List<Exemplaire> listerExemplaires(Rayon r) {
         return r.listerExemplaires();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RayonModel that = (RayonModel) o;
+        return codeRayon == that.codeRayon;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codeRayon);
     }
 }

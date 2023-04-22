@@ -72,8 +72,10 @@ public class RayonViewConsole implements RayonViewInterface {
     }
 
     private void rechercher() {
-        String codeRayon = Utilitaire.regex("R[0-9]+", "Code rayon : ");
-        presenter.search(codeRayon);
+        System.out.println("Code rayon : ");
+        String codeRayon = sc.nextLine();
+        Rayon rayon = new Rayon(codeRayon, null);
+        presenter.search(rayon);
     }
 
     private void modifier() {
@@ -97,7 +99,8 @@ public class RayonViewConsole implements RayonViewInterface {
 
 
     private void ajouter() {
-        String genre = Utilitaire.regex("[a-zA-Z ]+", "Entrez le genre  : ");
+        System.out.println("Entrez le genre  : ");
+        String genre = sc.nextLine();
         Rayon r = new Rayon("r", genre);
         presenter.addRayon(r);
         lrayon=presenter.getAll();//rafraichissement

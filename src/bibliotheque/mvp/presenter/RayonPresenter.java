@@ -1,20 +1,18 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.Exemplaire;
-import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.Rayon;
-import bibliotheque.mvp.model.lecteur.SpecialLecteur;
-import bibliotheque.mvp.model.rayon.DAORayon;
+import bibliotheque.mvp.model.DAO;
 import bibliotheque.mvp.model.rayon.SpecialRayon;
 import bibliotheque.mvp.view.rayon.RayonViewInterface;
 
 import java.util.List;
 
 public class RayonPresenter {
-    private DAORayon model;
+    private DAO<Rayon> model;
     private RayonViewInterface view;
 
-    public RayonPresenter(DAORayon model, RayonViewInterface view) {
+    public RayonPresenter(DAO<Rayon> model, RayonViewInterface view) {
         this.model = model;
         this.view = view;
         this.view.setPresenter(this);
@@ -25,11 +23,11 @@ public class RayonPresenter {
     }
 
     public List<Rayon> getAll(){
-        return model.getRayons();
+        return model.getAll();
     }
 
     public void addRayon(Rayon ray) {
-        Rayon rayon = model.addRayon(ray);
+        Rayon rayon = model.add(ray);
         if(rayon!=null) view.affMsg("création de :"+rayon);
         else view.affMsg("erreur de création");
        // List<Rayon> rayons = model.getRayons();
@@ -38,21 +36,21 @@ public class RayonPresenter {
 
 
     public void removeRayon(Rayon rayon) {
-        boolean ok = model.removeRayon(rayon);
+        boolean ok = model.remove(rayon);
         if(ok) view.affMsg("rayon effacé");
         else view.affMsg("rayon non effacé");
         //List<Rayon> rayons = model.getRayons();
         //view.setListDatas(rayons); //désactivé pour éviter appels imbriqués
     }
     public void update(Rayon rayon) {
-        Rayon l  =model.updateRayon(rayon);
+        Rayon l  =model.update(rayon);
         if(l==null) view.affMsg("mise à jour infrucueuse");
         else view.affMsg("mise à jour effectuée : "+l);
         //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
     }
 
-    public void search(String codeRayon) {
-        Rayon l = model.readRayon(codeRayon);
+    public void search(Rayon rayon) {
+        Rayon l = model.read(rayon);
         if(l==null) view.affMsg("recherche infructueuse");
         else view.affMsg(l.toString());
     }

@@ -1,6 +1,7 @@
 package bibliotheque.mvp;
 
-import bibliotheque.mvp.model.lecteur.DAOLecteur;
+import bibliotheque.metier.Lecteur;
+import bibliotheque.mvp.model.DAO;
 import bibliotheque.mvp.model.lecteur.LecteurModel;
 import bibliotheque.mvp.presenter.LecteurPresenter;
 import bibliotheque.mvp.view.lecteur.LecteurViewConsole;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class GestBiblio {
 
-    private DAOLecteur lm;
+    private DAO<Lecteur> lm;
     private LecteurViewInterface lv;
     private LecteurPresenter lp;
 

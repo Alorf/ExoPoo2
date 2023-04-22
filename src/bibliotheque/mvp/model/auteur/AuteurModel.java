@@ -1,11 +1,12 @@
 package bibliotheque.mvp.model.auteur;
 
 import bibliotheque.metier.*;
+import bibliotheque.mvp.model.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuteurModel implements DAOAuteur,SpecialAuteur {
+public class AuteurModel implements DAO<Auteur>,SpecialAuteur {
     private int numcli = 0;
     private List<Auteur> auteurs = new ArrayList<>();
 
@@ -13,7 +14,7 @@ public class AuteurModel implements DAOAuteur,SpecialAuteur {
         populate();
     }
     @Override
-    public Auteur addAuteur(Auteur auteur) {
+    public Auteur add(Auteur auteur) {
         boolean present = auteurs.contains(auteur);
         if (!present) {
             auteurs.add(auteur);
@@ -22,12 +23,12 @@ public class AuteurModel implements DAOAuteur,SpecialAuteur {
     }
 
     @Override
-    public boolean removeAuteur(Auteur auteur) {
+    public boolean remove(Auteur auteur) {
         return auteurs.remove(auteur);
     }
 
     @Override
-    public Auteur updateAuteur(Auteur auteur) {
+    public Auteur update(Auteur auteur) {
         //int idAuteur = auteur.getNumauteur();
         int p = auteurs.indexOf(auteur);
         if (p < 0) return null;
@@ -36,7 +37,7 @@ public class AuteurModel implements DAOAuteur,SpecialAuteur {
     }
 
     @Override
-    public Auteur readAuteur(Auteur auteur) {
+    public Auteur read(Auteur auteur) {
         for (Auteur l : auteurs) {
             if (l.equals(auteur)) return l;
         }
@@ -44,15 +45,15 @@ public class AuteurModel implements DAOAuteur,SpecialAuteur {
     }
 
     @Override
-    public List<Auteur> getAuteurs() {
+    public List<Auteur> getAll() {
         return auteurs;
     }
 
     private void populate(){
         Auteur auteur = new Auteur("Vert", "Claire", "Français");
-        addAuteur(auteur);
+        add(auteur);
         auteur  = new Auteur("Roques","Pascal","Belge");
-        addAuteur(auteur);
+        add(auteur);
     }
 
     @Override

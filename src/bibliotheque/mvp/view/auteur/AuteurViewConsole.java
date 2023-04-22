@@ -42,11 +42,11 @@ public class AuteurViewConsole implements AuteurViewInterface {
 
     @Override
     public void affList(List<Ouvrage> lex) {
-       affListe(lex);
+        affListe(lex);
     }
 
     public void menu() {
-        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "rechercher","modifier","special","fin"));
+        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "rechercher", "modifier", "special", "fin"));
         do {
             int ch = choixListe(options);
 
@@ -73,9 +73,15 @@ public class AuteurViewConsole implements AuteurViewInterface {
     }
 
     private void rechercher() {
-        String nom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le nom : ");
-        String prenom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le prenom : ");
-        String nat = Utilitaire.regex("[a-zA-Z ]+", "Entrez la nationalite : ");
+        System.out.printf("Entrez le nom : ");
+        String prenom = sc.nextLine();
+
+        System.out.printf("Entrez le prenom : ");
+        String nom = sc.nextLine();
+
+        System.out.printf("Entrez la nationalite : ");
+        String nat = sc.nextLine();
+
         Auteur auteur = new Auteur(nom, prenom, nat);
         presenter.search(auteur);
     }
@@ -83,64 +89,89 @@ public class AuteurViewConsole implements AuteurViewInterface {
     private void modifier() {
 
         int choix = choixElt(lauteur);
-        Auteur a = lauteur.get(choix-1);
+        Auteur a = lauteur.get(choix - 1);
         String nom = modifyIfNotBlank("nom", a.getNom());
         String prenom = modifyIfNotBlank("prénom", a.getPrenom());
 
-        String nat = modifyIfNotBlank("Nationalite",a.getNationalite());
+        String nat = modifyIfNotBlank("Nationalite", a.getNationalite());
 
         Auteur auteur = new Auteur(nom, prenom, nat);
         presenter.update(auteur);
-        lauteur=presenter.getAll();//rafraichissement
+        lauteur = presenter.getAll();//rafraichissement
         Utilitaire.affListe(lauteur);
     }
 
     private void retirer() {
         int choix = choixElt(lauteur);
-        Auteur auteur = lauteur.get(choix-1);
+        Auteur auteur = lauteur.get(choix - 1);
         presenter.removeAuteur(auteur);
-        lauteur=presenter.getAll();//rafraichissement
+        lauteur = presenter.getAll();//rafraichissement
         Utilitaire.affListe(lauteur);
     }
 
     private void ajouter() {
-        String nom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le nom : ");
-        String prenom = Utilitaire.regex("[a-zA-Z ]+", "Entrez le prenom : ");
-        String nat = Utilitaire.regex("[a-zA-Z ]+", "Entrez la nationalite : ");
+        System.out.printf("Entrez le nom : ");
+        String prenom = sc.nextLine();
+
+        System.out.printf("Entrez le prenom : ");
+        String nom = sc.nextLine();
+
+        System.out.printf("Entrez la nationalite : ");
+        String nat = sc.nextLine();
+
         Auteur auteur = new Auteur(nom, prenom, nat);
         presenter.addAuteur(auteur);
-        lauteur=presenter.getAll();//rafraichissement
+        lauteur = presenter.getAll();//rafraichissement
         Utilitaire.affListe(lauteur);
     }
+
     private void special() {
-        int choix =  choixElt(lauteur);
-        Auteur auteur = lauteur.get(choix-1);
-            do {
-                System.out.println("1.Lister les ouvrages\n2.Lister ouvrage typeOuvrage  ou typeLivre\n3.Lister ouvrage genre\n4.menu principal");
-                System.out.println("choix : ");
-                int ch = sc.nextInt();
-                sc.skip("\n");
-                switch (ch) {
-                    case 1:
-                        presenter.listerOuvrages(auteur);
-                        break;
-                    case 2:
-                        TypeOuvrage to = TypeOuvrage.LIVRE;
-                        TypeLivre tl = TypeLivre.ROMAN;
-                        presenter.listerOuvrage(auteur, to, tl);
-                        break;
-                    case 3:
-                        String genre = "Science-fiction";
-                        presenter.listerOuvrage(auteur, genre);
-                        break;
-                    case 4: return;
-                    default:
-                        System.out.println("choix invalide recommencez ");
+        int choix = choixElt(lauteur);
+        Auteur auteur = lauteur.get(choix - 1);
+        do {
+            while (true) {
+                try {
+                    System.out.println("1.Lister les ouvrages\n2.Lister ouvrage typeOuvrage  ou typeLivre\n3.Lister ouvrage genre\n4.menu principal");
+                    System.out.println("choix : ");
+                    while (true) {
+                        try {
+                            choix = sc.nextInt();
+                            sc.skip("\n");
+                            break;
+                        } catch (Exception e) {
+                            System.err.println("Erreur " + e.getMessage());
+                        }
+                    }
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur" + e.getMessage());
+                    System.out.println("Recommencez votre saisie");
                 }
-            } while (true);
+
+            }
+
+            switch (choix) {
+                case 1:
+                    presenter.listerOuvrages(auteur);
+                    break;
+                case 2:
+                    TypeOuvrage to = TypeOuvrage.LIVRE;
+                    TypeLivre tl = TypeLivre.ROMAN;
+                    presenter.listerOuvrage(auteur, to, tl);
+                    break;
+                case 3:
+                    String genre = "Science-fiction";
+                    presenter.listerOuvrage(auteur, genre);
+                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("choix invalide recommencez ");
+            }
+        } while (true);
 
 
-        }
     }
+}
 
 

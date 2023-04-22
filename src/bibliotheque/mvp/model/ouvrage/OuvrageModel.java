@@ -2,18 +2,19 @@ package bibliotheque.mvp.model.ouvrage;
 
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
+import bibliotheque.mvp.model.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OuvrageModel implements DAOOuvrage {
+public class OuvrageModel implements DAO<Ouvrage> {
     private int codeOuvrage = 0;
     private List<Ouvrage> ouvrages = new ArrayList<>();
 
     public OuvrageModel(){
     }
     @Override
-    public Ouvrage addOuvrage(Ouvrage ouvrage) {
+    public Ouvrage add(Ouvrage ouvrage) {
         boolean present = ouvrages.contains(ouvrage);
         if (!present) {
             ouvrages.add(ouvrage);
@@ -22,12 +23,12 @@ public class OuvrageModel implements DAOOuvrage {
     }
 
     @Override
-    public boolean removeOuvrage(Ouvrage ouvrage) {
+    public boolean remove(Ouvrage ouvrage) {
         return ouvrages.remove(ouvrage);
     }
 
     @Override
-    public Ouvrage updateOuvrage(Ouvrage ouvrage) {
+    public Ouvrage update(Ouvrage ouvrage) {
         int p = ouvrages.indexOf(ouvrage);
         if (p < 0) return null;
         ouvrages.set(p, ouvrage);
@@ -35,15 +36,14 @@ public class OuvrageModel implements DAOOuvrage {
     }
 
     @Override
-    public Ouvrage readOuvrage(Ouvrage ouv) {
-        for (Ouvrage o : ouvrages) {
-            if (o.equals(ouv)) return o;
-        }
-        return null;
+    public Ouvrage read(Ouvrage ouv) {
+        int p = ouvrages.indexOf(ouv);
+        if(p<0) return null;
+        return ouvrages.get(p);
     }
 
     @Override
-    public List<Ouvrage> getOuvrages() {
+    public List<Ouvrage> getAll() {
         return ouvrages;
     }
 

@@ -68,8 +68,10 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
     }
 
     private void rechercher() {
-        String codeOuvrage = Utilitaire.regex("R[0-9]+", "Code ouvrage : ");
-        presenter.search(codeOuvrage);
+        System.out.printf("Code ouvrage : ");
+        String codeOuvrage = sc.nextLine();
+        //Ouvrage ouv = new Ouvrage();
+        //presenter.search(codeOuvrage);
     }
 
     private void modifier() {
@@ -83,22 +85,67 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
             choix = choixListe(new ArrayList(Arrays.asList(menu)));
             switch (choix) {
                 case 1:
-                    o.setTitre(regex("[a-zA-Z]+", "Entrez le nouveau titre"));
+                    System.out.printf("Entrez le nouveau titre");
+                    String titre = sc.nextLine();
+                    o.setTitre(titre);
                     break;
                 case 2:
-                    o.setAgeMin(Integer.parseInt(regex("[0-9]+", "Entrez le nouvel age minimum")));
+                    check:while (true) {
+                        try {
+                            System.out.printf("Entrez le nouvel age minimum");
+                            int ageMin = -1;
+                            while (true) {
+                                try {
+                                    ageMin = sc.nextInt();
+                                    sc.skip("\n");
+                                    break;
+                                } catch (Exception e) {
+                                    System.err.println("Erreur " + e.getMessage());
+                                }
+                            }
+                            o.setAgeMin(ageMin);
+                            break check;
+                        } catch (Exception e) {
+                            System.err.println("Erreur" + e.getMessage());
+                            System.out.println("Recommencez votre saisie");
+                        }
+
+                    }
                     break;
                 case 3:
                     o.setDateParution(lecDate());
                     break;
                 case 4:
-                    o.setPrixLocation(Double.parseDouble(regex("[0-9]+", "Entrez le nouveau prix de location")));
+                    check:while (true) {
+                        try {
+                            System.out.printf("Entrez le nouveau prix de location");
+                            Double prixLoc= (double) -1;
+                            while (true) {
+                                try {
+                                    prixLoc = sc.nextDouble();
+                                    sc.skip("\n");
+                                    break;
+                                } catch (Exception e) {
+                                    System.err.println("Erreur " + e.getMessage());
+                                }
+                            }
+                            o.setPrixLocation(prixLoc);
+                            break check;
+                        } catch (Exception e) {
+                            System.err.println("Erreur" + e.getMessage());
+                            System.out.println("Recommencez votre saisie");
+                        }
+                    }
                     break;
                 case 5:
-                    o.setLangue(regex("[a-zA-Z]+", "Entrez la nouvelle langue"));
+                    System.out.printf("Entrez la nouvelle langue");
+                    String langue = sc.nextLine();
+                    o.setLangue(langue);
                     break;
                 case 6:
-                    o.setGenre(regex("[a-zA-Z]", "Entrez le nouveau genre"));
+                    System.out.printf("Entrez le nouveau genre");
+                    String genre = sc.nextLine();
+                    o.setGenre(genre);
                     break;
                 case 7:
                     break first;
@@ -115,10 +162,23 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
 
                 switch (choix) {
                     case 1:
-                        ((Livre) o).setIsbn(regex(".*", "Entrez le nouvel ISBN"));
+                        System.out.printf("Entrez le nouvel ISBN :");
+                        String isbn = sc.nextLine();
+                        ((Livre) o).setIsbn(isbn);
                         break;
                     case 2:
-                        ((Livre) o).setNbrePages(Integer.parseInt(regex("[0-9]+", "Entrez le nouveau nombre de pages")));
+                        System.out.printf("Entrez le nouveau nombre de pages");
+                        int nbPage = -1;
+                        while (true) {
+                            try {
+                                nbPage = sc.nextInt();
+                                sc.skip("\n");
+                                break;
+                            } catch (Exception e) {
+                                System.err.println("Erreur " + e.getMessage());
+                            }
+                        }
+                        ((Livre) o).setNbrePages(nbPage);
                         break;
                     case 3:
                         String[] typesLivre = {"Roman", "Nouvelle", "Essai", "Documentaire", "Biographie"};
@@ -147,7 +207,8 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                         }
                         break;
                     case 4:
-                        ((Livre) o).setResume(regex(".*", "Entrez le nouveau résumé"));
+                        System.out.printf("Entrez le nouveau résumé :  ");
+                        ((Livre) o).setResume(sc.nextLine());
                         break;
                     case 5:
                         break second;
@@ -160,10 +221,32 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
 
                 switch (choix){
                     case 1:
-                        ((CD) o).setCode(Long.parseLong(regex("[0-9]+", "Entrez le nouveau code")));
+                        System.out.println("Entrez le nouveau code");
+                        long code = -1;
+                        while (true) {
+                            try {
+                                code = sc.nextLong();
+                                sc.skip("\n");
+                                break;
+                            } catch (Exception e) {
+                                System.err.println("Erreur " + e.getMessage());
+                            }
+                        }
+                        ((CD) o).setCode(code);
                         break;
                     case 2:
-                        ((CD) o).setNbrePlages(Byte.parseByte(regex("[0-9]+", "Entrez le nouveau nombre de plages")));
+                        System.out.printf("Entrez le nouveau nombre de plages");
+                        byte nbPlage=-1;
+                        while (true) {
+                            try {
+                                choix = sc.nextByte();
+                                sc.skip("\n");
+                                break;
+                            } catch (Exception e) {
+                                System.err.println("Erreur " + e.getMessage());
+                            }
+                        }
+                        ((CD) o).setNbrePlages(nbPlage);
                         break;
                     case 3:
                         ((CD) o).setDureeTotale(lecTime());
@@ -179,10 +262,32 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
 
                 switch (choix){
                     case 1:
-                        ((DVD) o).setCode(Long.parseLong(regex("[0-9]+", "Entrez le nouveau code")));
+                        System.out.println("Entrez le nouveau code");
+                        int code=-1;
+                        while (true) {
+                            try {
+                                code = sc.nextInt();
+                                sc.skip("\n");
+                                break;
+                            } catch (Exception e) {
+                                System.err.println("Erreur " + e.getMessage());
+                            }
+                        }
+                        ((DVD) o).setCode(code);
                         break;
                     case 2:
-                        ((DVD) o).setNbreBonus(Byte.parseByte(regex("[0-9]+", "Entrez le nouveau nombre de plages")));
+                        System.out.printf("Entrez le nouveau nombre de plages");
+                        Byte nbreBonus=-1;
+                        while (true) {
+                            try {
+                                nbreBonus = sc.nextByte();
+                                sc.skip("\n");
+                                break;
+                            } catch (Exception e) {
+                                System.err.println("Erreur " + e.getMessage());
+                            }
+                        }
+                        ((DVD) o).setNbreBonus(nbreBonus);
                         break;
                     case 3:
                         ((DVD) o).setDureeTotale(lecTime());
@@ -214,25 +319,58 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
         String[] listeTo = {"Livre", "Cd", "DVD"};
         int choix = Utilitaire.choixElt(new ArrayList(Arrays.asList(listeTo)));
 
+        System.out.println("Entrez le titre de l'ouvrage");
+        String titre = sc.nextLine();
 
-        String titre = Utilitaire.regex(".*", "Entrez le titre de l'ouvrage");
-
-        int ageMin = Integer.parseInt(Utilitaire.regex("[0-9]+", "Entrez l'age minimum pour lire l'ouvrage"));
+        System.out.println("Entrez l'age minimum pour lire l'ouvrage");
+        int ageMin;
+        while (true) {
+            try {
+                ageMin = sc.nextInt();
+                sc.skip("\n");
+                break;
+            } catch (Exception e) {
+                System.err.println("Erreur " + e.getMessage());
+            }
+        }
 
         System.out.println("Date de parution");
         LocalDate dateParution = Utilitaire.lecDate();
 
-        double prixLoc = Double.parseDouble(Utilitaire.regex("[0-9]+", "Entrez le prix de location de l'ouvrage"));
-        //todo : Trouver un meilleur moyen pour lire un double en regex
+        System.out.println("Entrez le prix de location de l'ouvrage");
+        double  prixLoc=-1;
+        while (true) {
+            try {
+                prixLoc = sc.nextDouble();
+                sc.skip("\n");
+                break;
+            } catch (Exception e) {
+                System.err.println("Erreur " + e.getMessage());
+            }
+        }
 
-        String langue = Utilitaire.regex("[a-zA-Z ]", "Entrez la langue de l'ouvrage");
+        System.out.println("Entrez la langue de l'ouvrage");
+        String langue = sc.nextLine();
 
-        String genre = Utilitaire.regex("[a-zA-Z]+", "Entrez le genre de l'ouvrage");
+        System.out.println("Entrez le genre de l'ouvrage");
+        String genre = sc.nextLine();
 
         if (choix == 1) {
             to = TypeOuvrage.LIVRE;
-            String isbn = Utilitaire.regex(".*", "Entrez l'isbn");
-            int nbPage = Integer.parseInt(Utilitaire.regex("[0-9]+", "Nombre de page"));
+            System.out.println("Entrez l'isbn");
+            String isbn = sc.nextLine();
+
+            System.out.println("Nombre de page");
+            int nbPage;
+            while (true) {
+                try {
+                    nbPage = sc.nextInt();
+                    sc.skip("\n");
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage());
+                }
+            }
 
             String[] typesLivre = {"Roman", "Nouvelle", "Essai", "Documentaire", "Biographie"};
             TypeLivre tl;
@@ -259,16 +397,37 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     break;
             }
 
-            String resume = Utilitaire.regex(".*", "Entrez un résumé pour le livre");
+            System.out.println("Entrez un résumé pour le livre");
+            String resume = sc.nextLine();
 
             ouv = new Livre(titre, ageMin, dateParution, prixLoc, langue, genre, isbn, nbPage, tl, resume);
 
         } else if (choix == 2) {
             to = TypeOuvrage.CD;
 
-            long code = Long.parseLong(Utilitaire.regex("[0-9]+", "Entrez un code"));
+            System.out.println("Entrez un code");
+            long code;
+            while (true) {
+                try {
+                    code = sc.nextLong();
+                    sc.skip("\n");
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage());
+                }
+            }
 
-            byte nbPlages = Byte.parseByte(Utilitaire.regex("[0-9]+", "Entrez le nombre de plages"));
+            System.out.println("Entrez le nombre de plages");
+            byte nbPlages;
+            while (true) {
+                try {
+                    nbPlages = sc.nextByte();
+                    sc.skip("\n");
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage());
+                }
+            }
 
             System.out.println("Entrez la durée totale en minute");
             LocalTime dureeTotale = lecTime();
@@ -278,9 +437,29 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
         } else if (choix == 3) {
             to = TypeOuvrage.DVD;
 
-            long code = Long.parseLong(Utilitaire.regex("[0-9]+", "Entrez un code"));
+            System.out.println("Entrez un code");
+            long code;
+            while (true) {
+                try {
+                    code = sc.nextLong();
+                    sc.skip("\n");
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage());
+                }
+            }
 
-            byte nbreBonus = Byte.parseByte(Utilitaire.regex("[0-9]+", "Entrez le nombre de bonus"));
+            System.out.println("Entrez le nombre de bonus");
+            byte nbreBonus=-1;
+            while (true) {
+                try {
+                    nbreBonus = sc.nextByte();
+                    sc.skip("\n");
+                    break;
+                } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage());
+                }
+            }
 
             System.out.println("Entrez la durée totale en minute");
             LocalTime dureeTotale = lecTime();
@@ -290,11 +469,14 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
 
 
             while (true) {
-                resp = regex("[oONn]", "Voulez-vous ajouter une langue ?");
+
+                System.out.println("Voulez-vous ajouter une langue ? O/N");
+                resp = sc.nextLine();
                 if (resp.equalsIgnoreCase("o")) {
-                    tplangue = Utilitaire.regex("[a-zA-Z ]+", "Entrez la langue : ");
+                    System.out.println("Entrez la langue : ");
+                    tplangue = sc.nextLine();
                     autresLangues.add(tplangue.toLowerCase());
-                } else {
+                } else if (resp.equalsIgnoreCase("n")){
                     break;
                 }
             }
@@ -303,11 +485,13 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
 
 
             while (true) {
-                resp = regex("[oONn]", "Voulez-vous ajouter des langues de sous-titres ?");
+                System.out.println("Voulez-vous ajouter une langue de sous-titres ? O/N");
+                resp = sc.nextLine();
                 if (resp.equalsIgnoreCase("o")) {
-                    tplangue = Utilitaire.regex("[a-zA-Z ]+", "Entrez la langue du sous-titre : ");
+                    System.out.println("Entrez la langue du sous-titre : ");
+                    tplangue = sc.nextLine();
                     sousTitres.add(tplangue.toLowerCase());
-                } else {
+                } else if (resp.equalsIgnoreCase("n")){
                     break;
                 }
             }
