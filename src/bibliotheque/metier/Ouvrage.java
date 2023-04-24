@@ -18,7 +18,18 @@ public abstract class Ouvrage {
     protected List<Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) throws Exception{
+        if (titre.isEmpty()){
+            throw new Exception("Le titre ne peut pas être vide");
+        }
+
+        if (langue.isEmpty()){
+            throw new Exception("La langue ne peut pas être vide");
+        }
+
+        if (genre.isEmpty()){
+            throw new Exception("Le champ genre ne peut pas être vide");
+        }
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;

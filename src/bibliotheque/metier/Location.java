@@ -10,7 +10,13 @@ public class Location {
     private Lecteur loueur;
     private Exemplaire exemplaire;
 
-    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) {
+    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) throws Exception {
+        if (loueur == null){
+            throw new Exception("Le champ loueur ne peut pas être null");
+        }
+        if (exemplaire == null){
+            throw new Exception("Le champ exemplaire ne peut pas être null");
+        }
         this.dateLocation = dateLocation;
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
@@ -19,7 +25,14 @@ public class Location {
         this.exemplaire.getLloc().add(this);
     }
 
-    public Location(Lecteur loueur, Exemplaire exemplaire) {
+    public Location(Lecteur loueur, Exemplaire exemplaire) throws Exception{
+        if (loueur == null){
+            throw new Exception("Le champ loueur ne peut pas être null");
+        }
+
+        if (exemplaire == null){
+            throw new Exception("Le champ exemplaire ne peut pas être null");
+        }
         this.loueur = loueur;
         this.exemplaire = exemplaire;
         this.dateLocation=LocalDate.now();

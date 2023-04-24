@@ -9,7 +9,15 @@ public class Rayon {
     private String genre;
     private List<Exemplaire> lex = new ArrayList<>();
 
-    public Rayon(String codeRayon, String genre) {
+    public Rayon(String codeRayon, String genre) throws Exception{
+        if (codeRayon.isEmpty()){
+            throw new Exception("le champ codeRayon ne peut pas être vide");
+        }
+
+        if (genre.isEmpty()){
+            throw new Exception("Le champ genre ne peut pas être vide");
+        }
+
         this.codeRayon = codeRayon;
         this.genre = genre;
     }

@@ -13,7 +13,27 @@ public class Lecteur {
 
     private List<Location> lloc=new ArrayList<>();
 
-    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
+    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) throws Exception{
+        if (nom.isEmpty()){
+            throw new Exception("Le champ nom ne peut pas être vide");
+        }
+
+        if (prenom.isEmpty()){
+            throw new Exception("Le champ prenom ne peut pas être vide");
+        }
+
+        if (adresse.isEmpty()){
+            throw new Exception("Le champ adresse ne peut pas être vide");
+        }
+
+        if (mail.isEmpty()){
+            throw new Exception("Le champ mail ne peut pas être vide");
+        }
+
+        if (tel.isEmpty()){
+            throw new Exception("Le champ tel ne peut pas être vide");
+        }
+
         this.numlecteur = numlecteur;
         this.nom = nom;
         this.prenom = prenom;
