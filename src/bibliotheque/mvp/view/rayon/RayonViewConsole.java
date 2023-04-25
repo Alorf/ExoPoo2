@@ -41,11 +41,11 @@ public class RayonViewConsole implements RayonViewInterface {
 
     @Override
     public void affList(List<Exemplaire> lex) {
-       affListe(lex);
+        affListe(lex);
     }
 
     public void menu() {
-        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "rechercher","modifier","special","fin"));
+        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "rechercher", "modifier", "special", "fin"));
         do {
             int ch = choixListe(options);
 
@@ -74,26 +74,34 @@ public class RayonViewConsole implements RayonViewInterface {
     private void rechercher() {
         System.out.println("Code rayon : ");
         String codeRayon = sc.nextLine();
-        Rayon rayon = new Rayon(codeRayon, null);
-        presenter.search(rayon);
+        try {
+            Rayon rayon = new Rayon(codeRayon, null);
+            presenter.search(rayon);
+        } catch (Exception e) {
+            System.err.println("Erreur : " + e.getMessage());
+        }
     }
 
     private void modifier() {
         int choix = choixElt(lrayon);
-        Rayon l = lrayon.get(choix-1);
-        String genre = modifyIfNotBlank("prénom",l.getGenre());
+        Rayon l = lrayon.get(choix - 1);
+        String genre = modifyIfNotBlank("prénom", l.getGenre());
 
-        Rayon rayon = new Rayon("temp", genre);
-        presenter.update(rayon);
-        lrayon=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lrayon);
+        try {
+            Rayon rayon = new Rayon("temp", genre);
+            presenter.update(rayon);
+            lrayon = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(lrayon);
+        } catch (Exception e) {
+            System.err.println("Erreur : " + e.getMessage());
+        }
     }
 
     private void retirer() {
         int choix = choixElt(lrayon);
-        Rayon rayon = lrayon.get(choix-1);
+        Rayon rayon = lrayon.get(choix - 1);
         presenter.removeRayon(rayon);
-        lrayon=presenter.getAll();//rafraichissement
+        lrayon = presenter.getAll();//rafraichissement
         Utilitaire.affListe(lrayon);
     }
 
@@ -101,31 +109,37 @@ public class RayonViewConsole implements RayonViewInterface {
     private void ajouter() {
         System.out.println("Entrez le genre  : ");
         String genre = sc.nextLine();
-        Rayon r = new Rayon("r", genre);
-        presenter.addRayon(r);
-        lrayon=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lrayon);
-    }
-    private void special() {
-        int choix =  choixElt(lrayon);
-        Rayon rayon = lrayon.get(choix-1);
-            do {
-                System.out.println("1.Exemplaire en location\n3.menu principal");
-                System.out.println("choix : ");
-                int ch = sc.nextInt();
-                sc.skip("\n");
-                switch (ch) {
-                    case 1:
-                        presenter.listerExemplaires(rayon);
-                        break;
-                    case 2: return;
-                    default:
-                        System.out.println("choix invalide recommencez ");
-                }
-            } while (true);
-
-
+        try {
+            Rayon r = new Rayon("r", genre);
+            presenter.addRayon(r);
+            lrayon = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(lrayon);
+        } catch (Exception e) {
+            System.err.println("Erreur : " + e.getMessage());
         }
     }
+
+    private void special() {
+        int choix = choixElt(lrayon);
+        Rayon rayon = lrayon.get(choix - 1);
+        do {
+            System.out.println("1.Exemplaire en location\n3.menu principal");
+            System.out.println("choix : ");
+            int ch = sc.nextInt();
+            sc.skip("\n");
+            switch (ch) {
+                case 1:
+                    presenter.listerExemplaires(rayon);
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.out.println("choix invalide recommencez ");
+            }
+        } while (true);
+
+
+    }
+}
 
 

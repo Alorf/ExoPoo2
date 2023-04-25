@@ -59,10 +59,15 @@ public class LecteurModel implements DAO<Lecteur>,SpecialLecteur {
     }
 
     private void populate(){
-        Lecteur lec = new Lecteur(0,"Dupont","Jean", LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
-        add(lec);
-        lec = new Lecteur(0,"Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
-        add(lec);
+        try {
+            Lecteur lec = new Lecteur(0,"Dupont","Jean", LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
+            add(lec);
+            lec = new Lecteur(0,"Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
+            add(lec);
+        }catch (Exception e){
+            System.err.println("Erreur " + e.getMessage());
+        }
+
     }
 
     @Override

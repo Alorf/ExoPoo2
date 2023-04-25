@@ -82,19 +82,27 @@ public class LecteurViewConsole implements LecteurViewInterface {
         Lecteur l = llec.get(choix - 1);
         String nom = modifyIfNotBlank("nom", l.getNom());
         String prenom = modifyIfNotBlank("prénom", l.getPrenom());
+
         String date = modifyIfNotBlank("date de naissance", getDateFrench(l.getDn()));
         String[] jma = date.split(" ");
         int j = Integer.parseInt(jma[0]);
         int m = Integer.parseInt(jma[1]);
         int a = Integer.parseInt(jma[2]);
         LocalDate dn = LocalDate.of(a, m, j);
+
         String adr = modifyIfNotBlank("adresse", l.getAdresse());
         String mail = modifyIfNotBlank("mail", l.getMail());
         String tel = modifyIfNotBlank("tel", l.getTel());
-        Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
-        presenter.update(lec);
-        llec = presenter.getAll();//rafraichissement
-        Utilitaire.affListe(llec);
+
+        try {
+            Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
+            presenter.update(lec);
+            llec = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(llec);
+        } catch (Exception e) {
+            System.err.println("Erreur : " + e.getMessage());
+        }
+
     }
 
     private void retirer() {
@@ -136,10 +144,16 @@ public class LecteurViewConsole implements LecteurViewInterface {
         String mail = sc.nextLine();
         System.out.println("tel ");
         String tel = sc.nextLine();
-        Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
-        presenter.addLecteur(lec);
-        llec = presenter.getAll();//rafraichissement
-        Utilitaire.affListe(llec);
+
+        try {
+            Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
+            presenter.addLecteur(lec);
+            llec = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(llec);
+        } catch (Exception e) {
+            System.err.println("Erreur " + e.getMessage());
+        }
+
     }
 
     private void special() {

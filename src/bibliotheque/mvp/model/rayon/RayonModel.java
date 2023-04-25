@@ -55,10 +55,14 @@ public class RayonModel implements DAO<Rayon>, SpecialRayon {
     }
 
     private void populate() {
-        Rayon rayon = new Rayon("t1", "Science");
-        add(rayon);
-        rayon = new Rayon("t2", "Programmation");
-        add(rayon);
+        try{
+            Rayon rayon = new Rayon("t1", "Science");
+            add(rayon);
+            rayon = new Rayon("t2", "Programmation");
+            add(rayon);
+        }catch (Exception e){
+            System.err.println("Erreur " + e.getMessage() );
+        }
     }
 
     @Override

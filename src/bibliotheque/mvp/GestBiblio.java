@@ -19,7 +19,7 @@ public class GestBiblio {
 
 
 
-    public void gestion(){
+    public void gestion() {
         lm = new LecteurModel();
         lv = new LecteurViewConsole();
         lp = new LecteurPresenter(lm, lv);//création et injection de dépendance

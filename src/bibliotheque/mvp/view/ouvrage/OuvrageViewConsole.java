@@ -90,7 +90,8 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     o.setTitre(titre);
                     break;
                 case 2:
-                    check:while (true) {
+                    check:
+                    while (true) {
                         try {
                             System.out.printf("Entrez le nouvel age minimum");
                             int ageMin = -1;
@@ -116,10 +117,11 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     o.setDateParution(lecDate());
                     break;
                 case 4:
-                    check:while (true) {
+                    check:
+                    while (true) {
                         try {
                             System.out.printf("Entrez le nouveau prix de location");
-                            Double prixLoc= (double) -1;
+                            Double prixLoc = (double) -1;
                             while (true) {
                                 try {
                                     prixLoc = sc.nextDouble();
@@ -216,10 +218,11 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
             } while (true);
         } else if (o instanceof CD) {
             menu2 = new String[]{"code", "nombre plages", "duree totale", "quitter"};
-            second:do {
+            second:
+            do {
                 choix = choixListe(new ArrayList(Arrays.asList(menu2)));
 
-                switch (choix){
+                switch (choix) {
                     case 1:
                         System.out.println("Entrez le nouveau code");
                         long code = -1;
@@ -236,7 +239,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                         break;
                     case 2:
                         System.out.printf("Entrez le nouveau nombre de plages");
-                        byte nbPlage=-1;
+                        byte nbPlage = -1;
                         while (true) {
                             try {
                                 choix = sc.nextByte();
@@ -254,16 +257,17 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     case 4:
                         break second;
                 }
-            }while (true);
+            } while (true);
         } else if (o instanceof DVD) {
             menu2 = new String[]{"code", "nombre bonus", "duree totale", "quitter"};
-            second:do {
+            second:
+            do {
                 choix = choixListe(new ArrayList(Arrays.asList(menu2)));
 
-                switch (choix){
+                switch (choix) {
                     case 1:
                         System.out.println("Entrez le nouveau code");
-                        int code=-1;
+                        int code = -1;
                         while (true) {
                             try {
                                 code = sc.nextInt();
@@ -277,7 +281,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                         break;
                     case 2:
                         System.out.printf("Entrez le nouveau nombre de plages");
-                        Byte nbreBonus=-1;
+                        Byte nbreBonus = -1;
                         while (true) {
                             try {
                                 nbreBonus = sc.nextByte();
@@ -295,7 +299,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     case 4:
                         break second;
                 }
-            }while (true);
+            } while (true);
         }
 
         presenter.update(o);
@@ -338,7 +342,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
         LocalDate dateParution = Utilitaire.lecDate();
 
         System.out.println("Entrez le prix de location de l'ouvrage");
-        double  prixLoc=-1;
+        double prixLoc = -1;
         while (true) {
             try {
                 prixLoc = sc.nextDouble();
@@ -400,7 +404,12 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
             System.out.println("Entrez un résumé pour le livre");
             String resume = sc.nextLine();
 
-            ouv = new Livre(titre, ageMin, dateParution, prixLoc, langue, genre, isbn, nbPage, tl, resume);
+            try {
+                ouv = new Livre(titre, ageMin, dateParution, prixLoc, langue, genre, isbn, nbPage, tl, resume);
+
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
 
         } else if (choix == 2) {
             to = TypeOuvrage.CD;
@@ -432,7 +441,11 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
             System.out.println("Entrez la durée totale en minute");
             LocalTime dureeTotale = lecTime();
 
-            ouv = new CD(titre, ageMin, dateParution, prixLoc, langue, genre, code, nbPlages, dureeTotale);
+            try {
+                ouv = new CD(titre, ageMin, dateParution, prixLoc, langue, genre, code, nbPlages, dureeTotale);
+            } catch (Exception e) {
+                System.err.println("Erreur : " + e.getMessage());
+            }
 
         } else if (choix == 3) {
             to = TypeOuvrage.DVD;
@@ -450,7 +463,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
             }
 
             System.out.println("Entrez le nombre de bonus");
-            byte nbreBonus=-1;
+            byte nbreBonus = -1;
             while (true) {
                 try {
                     nbreBonus = sc.nextByte();
@@ -476,7 +489,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     System.out.println("Entrez la langue : ");
                     tplangue = sc.nextLine();
                     autresLangues.add(tplangue.toLowerCase());
-                } else if (resp.equalsIgnoreCase("n")){
+                } else if (resp.equalsIgnoreCase("n")) {
                     break;
                 }
             }
@@ -491,15 +504,19 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     System.out.println("Entrez la langue du sous-titre : ");
                     tplangue = sc.nextLine();
                     sousTitres.add(tplangue.toLowerCase());
-                } else if (resp.equalsIgnoreCase("n")){
+                } else if (resp.equalsIgnoreCase("n")) {
                     break;
                 }
             }
 
 
-            ouv = new DVD(titre, ageMin, dateParution, prixLoc, langue, genre, code, dureeTotale, nbreBonus);
-            ((DVD) ouv).setSousTitres(sousTitres);
-            ((DVD) ouv).setAutresLangues(autresLangues);
+            try {
+                ouv = new DVD(titre, ageMin, dateParution, prixLoc, langue, genre, code, dureeTotale, nbreBonus);
+                ((DVD) ouv).setSousTitres(sousTitres);
+                ((DVD) ouv).setAutresLangues(autresLangues);
+            }catch (Exception e){
+                System.err.println("Erreur : " + e.getMessage());
+            }
         }
 
         presenter.addOuvrage(ouv);

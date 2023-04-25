@@ -82,8 +82,12 @@ public class AuteurViewConsole implements AuteurViewInterface {
         System.out.printf("Entrez la nationalite : ");
         String nat = sc.nextLine();
 
-        Auteur auteur = new Auteur(nom, prenom, nat);
-        presenter.search(auteur);
+        try {
+            Auteur auteur = new Auteur(nom, prenom, nat);
+            presenter.search(auteur);
+        }catch (Exception e){
+            System.err.println("Erreur : " + e.getMessage());
+        }
     }
 
     private void modifier() {
@@ -95,10 +99,14 @@ public class AuteurViewConsole implements AuteurViewInterface {
 
         String nat = modifyIfNotBlank("Nationalite", a.getNationalite());
 
-        Auteur auteur = new Auteur(nom, prenom, nat);
-        presenter.update(auteur);
-        lauteur = presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lauteur);
+        try {
+            Auteur auteur = new Auteur(nom, prenom, nat);
+            presenter.update(auteur);
+            lauteur = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(lauteur);
+        }catch (Exception e){
+            System.err.println("Erreur : " + e.getMessage());
+        }
     }
 
     private void retirer() {
@@ -119,10 +127,15 @@ public class AuteurViewConsole implements AuteurViewInterface {
         System.out.printf("Entrez la nationalite : ");
         String nat = sc.nextLine();
 
-        Auteur auteur = new Auteur(nom, prenom, nat);
-        presenter.addAuteur(auteur);
-        lauteur = presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lauteur);
+        try {
+            Auteur auteur = new Auteur(nom, prenom, nat);
+            presenter.addAuteur(auteur);
+            lauteur = presenter.getAll();//rafraichissement
+            Utilitaire.affListe(lauteur);
+        }catch (Exception e){
+            System.err.println("Erreur  : " + e.getMessage());
+        }
+
     }
 
     private void special() {
