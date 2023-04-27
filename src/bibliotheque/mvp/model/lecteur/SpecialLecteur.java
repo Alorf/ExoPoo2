@@ -9,7 +9,5 @@ import java.util.List;
 public interface SpecialLecteur extends DAO <Lecteur>{
     public List<Exemplaire> exemplairesEnLocation(Lecteur l);
     public List<Exemplaire> exemplairesLoues(Lecteur l);
-    Lecteur read(int idLecteur);
-
 
 }

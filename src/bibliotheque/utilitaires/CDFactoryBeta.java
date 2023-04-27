@@ -33,7 +33,14 @@ public class CDFactoryBeta {
          byte nbrePlages= sc.nextByte();sc.skip("\n");
         System.out.println("durée en H M S : ");
         LocalTime dureeTotale = Utilitaire.lecTime();
-        CD cd =new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
-        return cd;
+
+        try{
+            CD cd =new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
+            return cd;
+        }catch (Exception e){
+            System.err.println("Erreur factory : " + e);
+        }
+
+        return null;
     }
 }

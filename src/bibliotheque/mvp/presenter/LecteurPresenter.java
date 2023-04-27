@@ -50,7 +50,7 @@ public class LecteurPresenter {
     }
 
     public void search(int idLecteur) {
-        Lecteur l = model.read(idLecteur);
+        Lecteur l = model.read(new Lecteur(idLecteur));
         if(l==null) view.affMsg("recherche infructueuse");
         else view.affMsg(l.toString());
     }

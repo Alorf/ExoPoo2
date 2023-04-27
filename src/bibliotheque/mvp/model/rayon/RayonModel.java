@@ -42,12 +42,14 @@ public class RayonModel implements DAO<Rayon>, SpecialRayon {
     }
 
     @Override
-    public Rayon read(Rayon object) {
+    public Rayon read(Rayon rayon) {
         for (Rayon l : rayons) {
-            if (l.equals(codeRayon)) return l;
+            if (l.equals(rayon)) return l;
         }
         return null;
     }
+
+
 
     @Override
     public List<Rayon> getAll() {

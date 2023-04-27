@@ -8,9 +8,68 @@ import java.util.Scanner;
 
 public class Utilitaire {
     private static Scanner sc = new Scanner(System.in);
+
+    public static int lireInt(){
+        int n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Integer.parseInt(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
+
+    public static byte lireByte(){
+        byte n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Byte.parseByte(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
+
+    public static long lireLong(){
+        long n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Long.parseLong(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
+    public static double lireDouble(){
+        double n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Double.parseDouble(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
     public static int choixListe(List l){
-       affListe(l);
-       return choixElt(l);
+        affListe(l);
+        return choixElt(l);
     }
 
     public static void affListe(List l){
@@ -23,66 +82,41 @@ public class Utilitaire {
     public static int choixElt(List l){
         int choix;
         do {
-            while (true) {
-                try {
-                    affListe(l);
-                    System.out.println("choix : ");
-                    while (true) {
-                        try {
-                            choix = sc.nextInt();
-                            sc.skip("\n");
-                            break;
-                        } catch (Exception e) {
-                            System.err.println("Erreur " + e.getMessage());
-                        }
-                    }
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur" + e.getMessage());
-                    System.out.println("Recommencez votre saisie");
-                }
+            System.out.println("choix :");
+            choix = lireInt();
 
-            }
         } while(choix <1 || choix > l.size());
         return choix;
     }
 
-    public static LocalDate lecDate() {
-        int a;
-        int m;
-        int j;
-        while (true) {
+    public static LocalDate lecDate(){
+        do {
+            String[] jma = sc.nextLine().split(" ");
             try {
-                String[] jma = sc.nextLine().split(" ");
-                j = Integer.parseInt(jma[0]);
-                m = Integer.parseInt(jma[1]);
-                a = Integer.parseInt(jma[2]);
-                break;
+                int j = Integer.parseInt(jma[0]);
+                int m = Integer.parseInt(jma[1]);
+                int a = Integer.parseInt(jma[2]);
+                return LocalDate.of(a, m, j);
             } catch (Exception e) {
-                System.err.println("Erreur " + e.getMessage());
+                System.out.println("date incorrecte");
             }
-        }
-        return LocalDate.of(a, m, j);
+        }while (true);
     }
 
     public static LocalTime lecTime(){
-        int h = 0;
-        int m = 0;
-        int s = 0;
-        while (true){
-            try{
-
+        do {
+            try {
                 String[] hms = sc.nextLine().split(" ");
-                h = Integer.parseInt(hms[0]);
-                m = Integer.parseInt(hms[1]);
-                s = Integer.parseInt(hms[2]);
-                break;
-            }catch (Exception e){
-                System.err.println("Erreur " + e.getMessage());
+                int h = Integer.parseInt(hms[0]);
+                int m = Integer.parseInt(hms[1]);
+                int s = Integer.parseInt(hms[2]);
+                return LocalTime.of(h, m, s);
+            }
+            catch (Exception e){
+                System.out.println("temps incorrect");
             }
         }
-        return LocalTime.of(h,m,s);
+        while (true);
     }
 
     public static String getDateFrench(LocalDate d){

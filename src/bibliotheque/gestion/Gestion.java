@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Gestion {
+    /*
     Scanner sc = new Scanner(System.in);
 //on a ôté static pour les listes qui n'est plus nécessaire
     private List<Auteur> laut = new ArrayList<>();
@@ -234,7 +235,7 @@ public class Gestion {
             }*/
 
 
-
+/*
         TypeOuvrage[] tto = TypeOuvrage.values();
         List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
         int choix = Utilitaire.choixListe(lto);
@@ -245,6 +246,7 @@ public class Gestion {
             case 2 : o = new CDFactoryBeta().create();break;
             case 3 : o = new DVDFactoryBeta().create();break;
         }*/
+    /*
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
         o = lof.get(choix-1).create();
         louv.add(o);
@@ -270,6 +272,8 @@ public class Gestion {
         g.populate();
         g.menu();
     }
+
+    */
 
   
 }

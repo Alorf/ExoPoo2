@@ -23,7 +23,13 @@ public class LivreFactory extends OuvrageFactory{
         TypeLivre tl = ttl[choix-1];
         System.out.println("résumé du livre :");
         String resume = sc.nextLine();
-         Livre l=new Livre(titre,ageMin,dateParution,prixLocation,langue,genre,isbn,nbrePages,tl,resume);
-        return l;
+        try {
+            Livre l=new Livre(titre,ageMin,dateParution,prixLocation,langue,genre,isbn,nbrePages,tl,resume);
+            return l;
+        }catch (Exception e){
+            System.err.println("Erreur factory : " + e);
+        }
+
+        return null;
    }
 }

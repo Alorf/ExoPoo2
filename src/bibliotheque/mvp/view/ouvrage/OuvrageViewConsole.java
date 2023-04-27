@@ -2,8 +2,7 @@ package bibliotheque.mvp.view.ouvrage;
 
 import bibliotheque.metier.*;
 import bibliotheque.mvp.presenter.OuvragePresenter;
-import bibliotheque.utilitaires.CDFactory;
-import bibliotheque.utilitaires.Utilitaire;
+import bibliotheque.utilitaires.*;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -75,7 +74,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
     }
 
     private void modifier() {
-        int choix = choixElt(louvrage);
+        int choix = choixListe(louvrage);
         Ouvrage o = louvrage.get(choix - 1);
 
         String[] menu = {"titre", "age min", "dateParution", "PrixLocation", "Langue", "Genre", "Etape suivante"};
@@ -90,54 +89,18 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                     o.setTitre(titre);
                     break;
                 case 2:
-                    check:
-                    while (true) {
-                        try {
-                            System.out.printf("Entrez le nouvel age minimum");
-                            int ageMin = -1;
-                            while (true) {
-                                try {
-                                    ageMin = sc.nextInt();
-                                    sc.skip("\n");
-                                    break;
-                                } catch (Exception e) {
-                                    System.err.println("Erreur " + e.getMessage());
-                                }
-                            }
-                            o.setAgeMin(ageMin);
-                            break check;
-                        } catch (Exception e) {
-                            System.err.println("Erreur" + e.getMessage());
-                            System.out.println("Recommencez votre saisie");
-                        }
+                    System.out.printf("Entrez le nouvel age minimum");
+                    int ageMin = lireInt();
+                    o.setAgeMin(ageMin);
 
-                    }
                     break;
                 case 3:
                     o.setDateParution(lecDate());
                     break;
                 case 4:
-                    check:
-                    while (true) {
-                        try {
-                            System.out.printf("Entrez le nouveau prix de location");
-                            Double prixLoc = (double) -1;
-                            while (true) {
-                                try {
-                                    prixLoc = sc.nextDouble();
-                                    sc.skip("\n");
-                                    break;
-                                } catch (Exception e) {
-                                    System.err.println("Erreur " + e.getMessage());
-                                }
-                            }
-                            o.setPrixLocation(prixLoc);
-                            break check;
-                        } catch (Exception e) {
-                            System.err.println("Erreur" + e.getMessage());
-                            System.out.println("Recommencez votre saisie");
-                        }
-                    }
+                    System.out.printf("Entrez le nouveau prix de location");
+                    double prixLoc = lireDouble();
+                    o.setPrixLocation(prixLoc);
                     break;
                 case 5:
                     System.out.printf("Entrez la nouvelle langue");
@@ -170,16 +133,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                         break;
                     case 2:
                         System.out.printf("Entrez le nouveau nombre de pages");
-                        int nbPage = -1;
-                        while (true) {
-                            try {
-                                nbPage = sc.nextInt();
-                                sc.skip("\n");
-                                break;
-                            } catch (Exception e) {
-                                System.err.println("Erreur " + e.getMessage());
-                            }
-                        }
+                        int nbPage = lireInt();
                         ((Livre) o).setNbrePages(nbPage);
                         break;
                     case 3:
@@ -225,30 +179,12 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                 switch (choix) {
                     case 1:
                         System.out.println("Entrez le nouveau code");
-                        long code = -1;
-                        while (true) {
-                            try {
-                                code = sc.nextLong();
-                                sc.skip("\n");
-                                break;
-                            } catch (Exception e) {
-                                System.err.println("Erreur " + e.getMessage());
-                            }
-                        }
+                        long code = lireLong();
                         ((CD) o).setCode(code);
                         break;
                     case 2:
                         System.out.printf("Entrez le nouveau nombre de plages");
-                        byte nbPlage = -1;
-                        while (true) {
-                            try {
-                                choix = sc.nextByte();
-                                sc.skip("\n");
-                                break;
-                            } catch (Exception e) {
-                                System.err.println("Erreur " + e.getMessage());
-                            }
-                        }
+                        byte nbPlage = lireByte();
                         ((CD) o).setNbrePlages(nbPlage);
                         break;
                     case 3:
@@ -267,30 +203,13 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
                 switch (choix) {
                     case 1:
                         System.out.println("Entrez le nouveau code");
-                        int code = -1;
-                        while (true) {
-                            try {
-                                code = sc.nextInt();
-                                sc.skip("\n");
-                                break;
-                            } catch (Exception e) {
-                                System.err.println("Erreur " + e.getMessage());
-                            }
-                        }
+                        int code = lireInt();
                         ((DVD) o).setCode(code);
                         break;
                     case 2:
                         System.out.printf("Entrez le nouveau nombre de plages");
-                        Byte nbreBonus = -1;
-                        while (true) {
-                            try {
-                                nbreBonus = sc.nextByte();
-                                sc.skip("\n");
-                                break;
-                            } catch (Exception e) {
-                                System.err.println("Erreur " + e.getMessage());
-                            }
-                        }
+                        byte nbreBonus = lireByte();
+
                         ((DVD) o).setNbreBonus(nbreBonus);
                         break;
                     case 3:
@@ -308,7 +227,7 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
     }
 
     private void retirer() {
-        int choix = choixElt(louvrage);
+        int choix = choixListe(louvrage);
         Ouvrage ouvrage = louvrage.get(choix - 1);
         presenter.removeOuvrage(ouvrage);
         louvrage = presenter.getAll();//rafraichissement
@@ -316,212 +235,15 @@ public class OuvrageViewConsole implements OuvrageViewInterface {
     }
 
 
-    private void ajouter() {
-        Ouvrage ouv = null;
-        TypeOuvrage to;
-
-        String[] listeTo = {"Livre", "Cd", "DVD"};
-        int choix = Utilitaire.choixElt(new ArrayList(Arrays.asList(listeTo)));
-
-        System.out.println("Entrez le titre de l'ouvrage");
-        String titre = sc.nextLine();
-
-        System.out.println("Entrez l'age minimum pour lire l'ouvrage");
-        int ageMin;
-        while (true) {
-            try {
-                ageMin = sc.nextInt();
-                sc.skip("\n");
-                break;
-            } catch (Exception e) {
-                System.err.println("Erreur " + e.getMessage());
-            }
-        }
-
-        System.out.println("Date de parution");
-        LocalDate dateParution = Utilitaire.lecDate();
-
-        System.out.println("Entrez le prix de location de l'ouvrage");
-        double prixLoc = -1;
-        while (true) {
-            try {
-                prixLoc = sc.nextDouble();
-                sc.skip("\n");
-                break;
-            } catch (Exception e) {
-                System.err.println("Erreur " + e.getMessage());
-            }
-        }
-
-        System.out.println("Entrez la langue de l'ouvrage");
-        String langue = sc.nextLine();
-
-        System.out.println("Entrez le genre de l'ouvrage");
-        String genre = sc.nextLine();
-
-        if (choix == 1) {
-            to = TypeOuvrage.LIVRE;
-            System.out.println("Entrez l'isbn");
-            String isbn = sc.nextLine();
-
-            System.out.println("Nombre de page");
-            int nbPage;
-            while (true) {
-                try {
-                    nbPage = sc.nextInt();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
-
-            String[] typesLivre = {"Roman", "Nouvelle", "Essai", "Documentaire", "Biographie"};
-            TypeLivre tl;
-            choix = Utilitaire.choixListe(new ArrayList(Arrays.asList(typesLivre)));
-
-            switch (choix) {
-                case 1:
-                    tl = TypeLivre.ROMAN;
-                    break;
-                case 2:
-                    tl = TypeLivre.NOUVELLE;
-                    break;
-                case 3:
-                    tl = TypeLivre.ESSAI;
-                    break;
-                case 4:
-                    tl = TypeLivre.DOCUMENTAIRE;
-                    break;
-                case 5:
-                    tl = TypeLivre.BIOGRAPHIE;
-                    break;
-                default:
-                    tl = TypeLivre.ROMAN;
-                    break;
-            }
-
-            System.out.println("Entrez un résumé pour le livre");
-            String resume = sc.nextLine();
-
-            try {
-                ouv = new Livre(titre, ageMin, dateParution, prixLoc, langue, genre, isbn, nbPage, tl, resume);
-
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
-
-        } else if (choix == 2) {
-            to = TypeOuvrage.CD;
-
-            System.out.println("Entrez un code");
-            long code;
-            while (true) {
-                try {
-                    code = sc.nextLong();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
-
-            System.out.println("Entrez le nombre de plages");
-            byte nbPlages;
-            while (true) {
-                try {
-                    nbPlages = sc.nextByte();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
-
-            System.out.println("Entrez la durée totale en minute");
-            LocalTime dureeTotale = lecTime();
-
-            try {
-                ouv = new CD(titre, ageMin, dateParution, prixLoc, langue, genre, code, nbPlages, dureeTotale);
-            } catch (Exception e) {
-                System.err.println("Erreur : " + e.getMessage());
-            }
-
-        } else if (choix == 3) {
-            to = TypeOuvrage.DVD;
-
-            System.out.println("Entrez un code");
-            long code;
-            while (true) {
-                try {
-                    code = sc.nextLong();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
-
-            System.out.println("Entrez le nombre de bonus");
-            byte nbreBonus = -1;
-            while (true) {
-                try {
-                    nbreBonus = sc.nextByte();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
-
-            System.out.println("Entrez la durée totale en minute");
-            LocalTime dureeTotale = lecTime();
-
-            String resp, tplangue;
-            Set<String> autresLangues = new HashSet<>();
-
-
-            while (true) {
-
-                System.out.println("Voulez-vous ajouter une langue ? O/N");
-                resp = sc.nextLine();
-                if (resp.equalsIgnoreCase("o")) {
-                    System.out.println("Entrez la langue : ");
-                    tplangue = sc.nextLine();
-                    autresLangues.add(tplangue.toLowerCase());
-                } else if (resp.equalsIgnoreCase("n")) {
-                    break;
-                }
-            }
-
-            Set<String> sousTitres = new HashSet<>();
-
-
-            while (true) {
-                System.out.println("Voulez-vous ajouter une langue de sous-titres ? O/N");
-                resp = sc.nextLine();
-                if (resp.equalsIgnoreCase("o")) {
-                    System.out.println("Entrez la langue du sous-titre : ");
-                    tplangue = sc.nextLine();
-                    sousTitres.add(tplangue.toLowerCase());
-                } else if (resp.equalsIgnoreCase("n")) {
-                    break;
-                }
-            }
-
-
-            try {
-                ouv = new DVD(titre, ageMin, dateParution, prixLoc, langue, genre, code, dureeTotale, nbreBonus);
-                ((DVD) ouv).setSousTitres(sousTitres);
-                ((DVD) ouv).setAutresLangues(autresLangues);
-            }catch (Exception e){
-                System.err.println("Erreur : " + e.getMessage());
-            }
-        }
-
-        presenter.addOuvrage(ouv);
-        louvrage = presenter.getAll();//rafraichissement
-        Utilitaire.affListe(louvrage);
+    protected void ajouter() {
+        TypeOuvrage[] tto = TypeOuvrage.values();
+        List<TypeOuvrage> lto = new ArrayList<>(Arrays.asList(tto));
+        int choix = Utilitaire.choixListe(lto);
+        Ouvrage o = null;
+        List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory()));
+        o = lof.get(choix - 1).create();
+        presenter.addOuvrage(o);
+        //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
     }
 }
 

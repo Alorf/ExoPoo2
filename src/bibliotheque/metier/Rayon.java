@@ -10,16 +10,24 @@ public class Rayon {
     private List<Exemplaire> lex = new ArrayList<>();
 
     public Rayon(String codeRayon, String genre) throws Exception{
-        if (codeRayon.isEmpty()){
+        if (codeRayon == null || codeRayon.isBlank()){
             throw new Exception("le champ codeRayon ne peut pas être vide");
         }
 
-        if (genre.isEmpty()){
+        if (genre == null || genre.isBlank()){
             throw new Exception("Le champ genre ne peut pas être vide");
         }
 
         this.codeRayon = codeRayon;
         this.genre = genre;
+    }
+
+    public Rayon(String codeRayon) throws Exception{
+        if (codeRayon == null || codeRayon.isBlank()){
+            throw new Exception("le champ codeRayon ne peut pas être vide");
+        }
+
+        this.codeRayon = codeRayon;
     }
 
     @Override

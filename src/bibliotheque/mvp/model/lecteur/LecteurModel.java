@@ -7,6 +7,7 @@ import bibliotheque.mvp.model.DAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LecteurModel implements DAO<Lecteur>,SpecialLecteur {
     private int numcli = 0;
@@ -41,16 +42,24 @@ public class LecteurModel implements DAO<Lecteur>,SpecialLecteur {
     }
 
     @Override
-    public Lecteur read(Lecteur object) {
+    public Lecteur read(Lecteur idLecteur) {
+        for (Lecteur l : lecteurs) {
+            if (l.equals(idLecteur)) return l;
+        }
         return null;
     }
 
     @Override
-    public Lecteur read(int idLecteur) {
-        for (Lecteur l : lecteurs) {
-            if (l.getNumlecteur() == idLecteur) return l;
-        }
-        return null;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LecteurModel that = (LecteurModel) o;
+        return numcli == that.numcli;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numcli);
     }
 
     @Override

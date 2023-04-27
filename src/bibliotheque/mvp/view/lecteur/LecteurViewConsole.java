@@ -78,7 +78,7 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void modifier() {
-        int choix = choixElt(llec);
+        int choix = choixListe(llec);
         Lecteur l = llec.get(choix - 1);
         String nom = modifyIfNotBlank("nom", l.getNom());
         String prenom = modifyIfNotBlank("prénom", l.getPrenom());
@@ -106,7 +106,7 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void retirer() {
-        int choix = choixElt(llec);
+        int choix = choixListe(llec);
         Lecteur lecteur = llec.get(choix - 1);
         presenter.removeLecteur(lecteur);
         llec = presenter.getAll();//rafraichissement
@@ -122,8 +122,8 @@ public class LecteurViewConsole implements LecteurViewInterface {
         System.out.println("date de naissance");
         LocalDate dn;
 
-        String[] jma = sc.nextLine().split(" ");
         while (true) {
+            String[] jma = sc.nextLine().split(" ");
             try {
                 int j = Integer.parseInt(jma[0]);
                 int m = Integer.parseInt(jma[1]);
@@ -157,21 +157,13 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void special() {
-        int choix = choixElt(llec);
+        int choix = choixListe(llec);
         Lecteur lec = llec.get(choix - 1);
         do {
             System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3.menu principal");
             System.out.println("choix : ");
-            int ch;
-            while (true) {
-                try {
-                    ch = sc.nextInt();
-                    sc.skip("\n");
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage());
-                }
-            }
+            int ch = lireInt();
+
             switch (ch) {
                 case 1:
                     presenter.exemplairesEnLocation(lec);

@@ -92,7 +92,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
 
     private void modifier() {
 
-        int choix = choixElt(lauteur);
+        int choix = choixListe(lauteur);
         Auteur a = lauteur.get(choix - 1);
         String nom = modifyIfNotBlank("nom", a.getNom());
         String prenom = modifyIfNotBlank("prénom", a.getPrenom());
@@ -110,7 +110,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
     }
 
     private void retirer() {
-        int choix = choixElt(lauteur);
+        int choix = choixListe(lauteur);
         Auteur auteur = lauteur.get(choix - 1);
         presenter.removeAuteur(auteur);
         lauteur = presenter.getAll();//rafraichissement
@@ -135,33 +135,15 @@ public class AuteurViewConsole implements AuteurViewInterface {
         }catch (Exception e){
             System.err.println("Erreur  : " + e.getMessage());
         }
-
     }
 
     private void special() {
-        int choix = choixElt(lauteur);
+        int choix = choixListe(lauteur);
         Auteur auteur = lauteur.get(choix - 1);
         do {
-            while (true) {
-                try {
-                    System.out.println("1.Lister les ouvrages\n2.Lister ouvrage typeOuvrage  ou typeLivre\n3.Lister ouvrage genre\n4.menu principal");
-                    System.out.println("choix : ");
-                    while (true) {
-                        try {
-                            choix = sc.nextInt();
-                            sc.skip("\n");
-                            break;
-                        } catch (Exception e) {
-                            System.err.println("Erreur " + e.getMessage());
-                        }
-                    }
-                    break;
-                } catch (Exception e) {
-                    System.err.println("Erreur" + e.getMessage());
-                    System.out.println("Recommencez votre saisie");
-                }
-
-            }
+            System.out.println("1.Lister les ouvrages\n2.Lister ouvrage typeOuvrage  ou typeLivre\n3.Lister ouvrage genre\n4.menu principal");
+            System.out.print("choix : ");
+            choix = lireInt();
 
             switch (choix) {
                 case 1:
@@ -173,7 +155,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
                     presenter.listerOuvrage(auteur, to, tl);
                     break;
                 case 3:
-                    String genre = "Science-fiction";
+                    String genre = sc.nextLine();
                     presenter.listerOuvrage(auteur, genre);
                     break;
                 case 4:
@@ -182,8 +164,6 @@ public class AuteurViewConsole implements AuteurViewInterface {
                     System.out.println("choix invalide recommencez ");
             }
         } while (true);
-
-
     }
 }
 

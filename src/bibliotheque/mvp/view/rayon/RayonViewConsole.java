@@ -75,7 +75,7 @@ public class RayonViewConsole implements RayonViewInterface {
         System.out.println("Code rayon : ");
         String codeRayon = sc.nextLine();
         try {
-            Rayon rayon = new Rayon(codeRayon, null);
+            Rayon rayon = new Rayon(codeRayon);
             presenter.search(rayon);
         } catch (Exception e) {
             System.err.println("Erreur : " + e.getMessage());
@@ -83,9 +83,9 @@ public class RayonViewConsole implements RayonViewInterface {
     }
 
     private void modifier() {
-        int choix = choixElt(lrayon);
+        int choix = choixListe(lrayon);
         Rayon l = lrayon.get(choix - 1);
-        String genre = modifyIfNotBlank("prénom", l.getGenre());
+        String genre = modifyIfNotBlank("genre", l.getGenre());
 
         try {
             Rayon rayon = new Rayon("temp", genre);
@@ -98,7 +98,7 @@ public class RayonViewConsole implements RayonViewInterface {
     }
 
     private void retirer() {
-        int choix = choixElt(lrayon);
+        int choix = choixListe(lrayon);
         Rayon rayon = lrayon.get(choix - 1);
         presenter.removeRayon(rayon);
         lrayon = presenter.getAll();//rafraichissement
@@ -107,26 +107,30 @@ public class RayonViewConsole implements RayonViewInterface {
 
 
     private void ajouter() {
-        System.out.println("Entrez le genre  : ");
+        System.out.print("Entrez le genre  : ");
         String genre = sc.nextLine();
+        System.out.print("Entrez le code : ");
+        String code = sc.nextLine();
         try {
-            Rayon r = new Rayon("r", genre);
+
+            Rayon r = new Rayon(code, genre);
             presenter.addRayon(r);
             lrayon = presenter.getAll();//rafraichissement
             Utilitaire.affListe(lrayon);
+
         } catch (Exception e) {
             System.err.println("Erreur : " + e.getMessage());
         }
     }
 
     private void special() {
-        int choix = choixElt(lrayon);
+        int choix = choixListe(lrayon);
+
         Rayon rayon = lrayon.get(choix - 1);
         do {
             System.out.println("1.Exemplaire en location\n3.menu principal");
             System.out.println("choix : ");
-            int ch = sc.nextInt();
-            sc.skip("\n");
+            int ch = lireInt();
             switch (ch) {
                 case 1:
                     presenter.listerExemplaires(rayon);
@@ -137,8 +141,6 @@ public class RayonViewConsole implements RayonViewInterface {
                     System.out.println("choix invalide recommencez ");
             }
         } while (true);
-
-
     }
 }
 

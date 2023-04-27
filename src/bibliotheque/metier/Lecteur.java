@@ -43,6 +43,10 @@ public class Lecteur {
         this.tel = tel;
     }
 
+    public Lecteur(int numlecteur){
+        this.numlecteur = numlecteur;
+    }
+
     public int getNumlecteur() {
         return numlecteur;
     }

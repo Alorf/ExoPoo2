@@ -41,7 +41,14 @@ public class LivreFactoryBeta {
         TypeLivre tl = ttl[choix-1];
         System.out.println("résumé du livre :");
         String resume = sc.nextLine();
-        Livre l=new Livre(titre,ageMin,dp,ploc,langue,genre,isbn,nbrePages,tl,resume);
-        return l;
+
+        try{
+            Livre l=new Livre(titre,ageMin,dp,ploc,langue,genre,isbn,nbrePages,tl,resume);
+            return l;
+        }catch (Exception e){
+            System.err.println("Erreur factory : " + e);
+        }
+
+        return null;
     }
 }
