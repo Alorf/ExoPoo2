@@ -10,21 +10,8 @@ public class Livre extends Ouvrage{
     private String resume;
 
 
-    public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, TypeLivre tl, String resume) throws Exception {
+    public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, TypeLivre tl, String resume) throws Exception{
         super(titre, ageMin, dateParution, TypeOuvrage.LIVRE, prixLocation, langue, genre);
-
-        if (isbn.isEmpty()){
-            throw new Exception("Le champ isbn ne peut pas être vide");
-        }
-
-        if (nbrePages == 0){
-            throw new Exception("Le livre ne peut pas avoir 0 page");
-        }
-
-        if (resume.isEmpty()){
-            throw new Exception("Le champ résumé ne peut pas être vide");
-        }
-
         this.isbn=isbn;
         this.nbrePages=nbrePages;
         this.tl=tl;

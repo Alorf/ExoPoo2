@@ -1,37 +1,34 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.Auteur;
-import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeLivre;
-import bibliotheque.metier.TypeOuvrage;
 import bibliotheque.mvp.model.DAO;
-import bibliotheque.mvp.model.auteur.SpecialAuteur;
+import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.view.ViewInterface;
-import bibliotheque.mvp.view.auteur.AuteurViewInterface;
 
-import java.util.List;
 
-public class AuteurPresenter extends Presenter<Auteur> {
+
+public class AuteurPresenter extends Presenter<Auteur> implements SpecialAuteurPresenter {
+
 
     public AuteurPresenter(DAO<Auteur> model, ViewInterface<Auteur> view) {
         super(model, view);
     }
+    @Override
+    public void  listerOuvrages(Auteur a) {
 
-    public void listerOuvrages(Auteur auteur) {
-        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur);
-        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
-        else view.affList(louv);
+        view.affList (((SpecialAuteur)model).listerOuvrages(a));
     }
 
-    public void listerOuvrage(Auteur auteur, TypeOuvrage to, TypeLivre tl) {
-        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur, to, tl);
-        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
-        else view.affList(louv);
+
+    @Override
+    public void listerLivre(Auteur a, TypeLivre tl) {
+
+        view.affList (((SpecialAuteur)model).listerLivre(a,tl));
     }
 
-    public void listerOuvrage(Auteur auteur, String genre) {
-        List<Ouvrage> louv =   ((SpecialAuteur)model).listerOuvrages(auteur, genre);
-        if(louv==null || louv.isEmpty()) view.affMsg("aucun ouvrage trouvé");
-        else view.affList(louv);
+    @Override
+    public void listerOuvrages(Auteur a, String genre) {
+        view.affList (((SpecialAuteur)model).listerOuvrages(a,genre));
     }
 }

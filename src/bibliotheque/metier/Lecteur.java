@@ -1,9 +1,10 @@
 package bibliotheque.metier;
 
+
 import java.time.LocalDate;
 import java.util.*;
 
-public class Lecteur {
+public class Lecteur   {
     private int numlecteur;
     private  String nom,prenom;
     private LocalDate dn;
@@ -13,27 +14,8 @@ public class Lecteur {
 
     private List<Location> lloc=new ArrayList<>();
 
-    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) throws Exception{
-        if (nom.isEmpty()){
-            throw new Exception("Le champ nom ne peut pas être vide");
-        }
-
-        if (prenom.isEmpty()){
-            throw new Exception("Le champ prenom ne peut pas être vide");
-        }
-
-        if (adresse.isEmpty()){
-            throw new Exception("Le champ adresse ne peut pas être vide");
-        }
-
-        if (mail.isEmpty()){
-            throw new Exception("Le champ mail ne peut pas être vide");
-        }
-
-        if (tel.isEmpty()){
-            throw new Exception("Le champ tel ne peut pas être vide");
-        }
-
+    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) throws Exception {
+if(nom==null || prenom==null ||nom.trim().equals("")||prenom.trim().equals("")) throw new Exception("informations invalides");
         this.numlecteur = numlecteur;
         this.nom = nom;
         this.prenom = prenom;
@@ -41,10 +23,6 @@ public class Lecteur {
         this.adresse = adresse;
         this.mail = mail;
         this.tel = tel;
-    }
-
-    public Lecteur(int numlecteur){
-        this.numlecteur = numlecteur;
     }
 
     public int getNumlecteur() {
@@ -152,4 +130,5 @@ public class Lecteur {
         }
        return stex;
     }
+
 }

@@ -1,33 +1,25 @@
 package bibliotheque.metier;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Rayon {
+public class Rayon  {
     private String codeRayon;
     private String genre;
     private List<Exemplaire> lex = new ArrayList<>();
 
-    public Rayon(String codeRayon, String genre) throws Exception{
-        if (codeRayon == null || codeRayon.isBlank()){
-            throw new Exception("le champ codeRayon ne peut pas être vide");
-        }
-
-        if (genre == null || genre.isBlank()){
-            throw new Exception("Le champ genre ne peut pas être vide");
-        }
-
+    public Rayon(String codeRayon) {
         this.codeRayon = codeRayon;
-        this.genre = genre;
     }
 
-    public Rayon(String codeRayon) throws Exception{
-        if (codeRayon == null || codeRayon.isBlank()){
-            throw new Exception("le champ codeRayon ne peut pas être vide");
-        }
 
+    public Rayon(String codeRayon, String genre) throws Exception {
+        if(codeRayon==null|| codeRayon.trim().equals("")) throw new Exception("code rayon vide");
+        if(genre==null|| genre.trim().equals("")) throw new Exception("code rayon vide");
         this.codeRayon = codeRayon;
+        this.genre = genre;
     }
 
     @Override
@@ -51,7 +43,6 @@ public class Rayon {
                 '}';
     }
     public void addExemplaire(Exemplaire e){
-        lex.add(e);
         e.setRayon(this);
     }
 

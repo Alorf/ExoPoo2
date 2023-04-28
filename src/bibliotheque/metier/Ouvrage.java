@@ -1,9 +1,10 @@
 package bibliotheque.metier;
 
+
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public abstract class Ouvrage {
     protected String titre;
@@ -18,18 +19,8 @@ public abstract class Ouvrage {
     protected List<Exemplaire> lex = new ArrayList<>();
 
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) throws Exception{
-        if (titre.isEmpty()){
-            throw new Exception("Le titre ne peut pas être vide");
-        }
-
-        if (langue.isEmpty()){
-            throw new Exception("La langue ne peut pas être vide");
-        }
-
-        if (genre.isEmpty()){
-            throw new Exception("Le champ genre ne peut pas être vide");
-        }
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre)throws Exception {
+       if(titre==null || titre.trim().equals("")) throw new Exception("titre invalide");
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -138,7 +129,6 @@ public abstract class Ouvrage {
         a.getLouvrage().remove(this);
     }
     public void addExemplaire(Exemplaire e){
-        lex.add(e);
         e.setOuvrage(this);
     }
 
@@ -157,4 +147,5 @@ public abstract class Ouvrage {
         }
         return lex2;
     }
+
 }

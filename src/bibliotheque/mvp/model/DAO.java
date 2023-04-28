@@ -1,17 +1,15 @@
 package bibliotheque.mvp.model;
 
-import bibliotheque.metier.Auteur;
-
 import java.util.List;
 
 public interface DAO<T> {
-    T add(T object);
 
-    boolean remove(T object);
-    T update(T object);
+    T add(T t);
 
-    T read(T object);
+    boolean remove(T t);
+    T update(T t);
+
+    T read(T rech);
 
     List<T> getAll();
-
 }
