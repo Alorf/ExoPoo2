@@ -13,6 +13,14 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements SpecialAuteurViewConsole {
     @Override
+    public int tri(Auteur o1, Auteur o2) {
+        String a = ((Auteur) o1).getNom() + " " + ((Auteur) o1).getPrenom();
+        String b = ((Auteur) o2).getNom() + " " + ((Auteur) o2).getPrenom();
+
+        return a.compareTo(b);
+    }
+
+    @Override
     protected void rechercher() {
         try {
             System.out.println("nom ");
@@ -23,8 +31,8 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
             String nat = sc.nextLine();
             Auteur rech = new Auteur(nom, prenom, nat);
             presenter.search(rech);
-        }catch(Exception e){
-            System.out.println("erreur : "+e);
+        } catch (Exception e) {
+            System.out.println("erreur : " + e);
         }
 
     }
@@ -32,8 +40,8 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
     @Override
     protected void modifier() {
         int choix = choixElt(ldatas);
-        Auteur a = ldatas.get(choix-1);
-         do {
+        Auteur a = ldatas.get(choix - 1);
+        do {
             try {
                 String nom = modifyIfNotBlank("nom", a.getNom());
                 String prenom = modifyIfNotBlank("prénom", a.getPrenom());
@@ -45,9 +53,9 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
             }
-        }while(true);
+        } while (true);
         presenter.update(a);
-        ldatas=presenter.getAll();//rafraichissement
+        ldatas = presenter.getAll();//rafraichissement
         affListe(ldatas);
     }
 
@@ -65,18 +73,18 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
                 a = new Auteur(nom, prenom, nat);
                 break;
             } catch (Exception e) {
-                System.out.println("une erreur est survenue : "+e.getMessage());
+                System.out.println("une erreur est survenue : " + e.getMessage());
             }
-        }while(true);
+        } while (true);
         presenter.add(a);
     }
 
     @Override
     protected void special() {
-        int choix =  choixElt(ldatas);
-        Auteur a = ldatas.get(choix-1);
+        int choix = choixElt(ldatas);
+        Auteur a = ldatas.get(choix - 1);
 
-        List options = new ArrayList<>(Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin"));
+        List options = new ArrayList<>(Arrays.asList("lister ouvrages", "lister livres", "lister par genre", "fin"));
         do {
             int ch = choixListe(options);
 
@@ -91,7 +99,8 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
                 case 3:
                     listerGenre(a);
                     break;
-                  case 4 :return;
+                case 4:
+                    return;
             }
         } while (true);
 
@@ -101,20 +110,20 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        ((SpecialAuteurPresenter)presenter).listerOuvrages(a,genre);
+        ((SpecialAuteurPresenter) presenter).listerOuvrages(a, genre);
     }
 
     @Override
-    public void listerOuvrages(Auteur a){
-        ((SpecialAuteurPresenter)presenter).listerOuvrages(a);
+    public void listerOuvrages(Auteur a) {
+        ((SpecialAuteurPresenter) presenter).listerOuvrages(a);
     }
 
     @Override
-    public void listerLivres(Auteur a){
+    public void listerLivres(Auteur a) {
         TypeLivre[] tlv = TypeLivre.values();
         int ch2 = choixListe(List.of(tlv));
-        TypeLivre tl = tlv[ch2-1];
-        ((SpecialAuteurPresenter)presenter).listerLivre(a,tl);
+        TypeLivre tl = tlv[ch2 - 1];
+        ((SpecialAuteurPresenter) presenter).listerLivre(a, tl);
     }
 
 

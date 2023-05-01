@@ -1,11 +1,9 @@
     package bibliotheque.mvp.view;
 
+    import bibliotheque.metier.*;
     import bibliotheque.mvp.presenter.Presenter;
 
-    import java.util.ArrayList;
-    import java.util.Arrays;
-    import java.util.List;
-    import java.util.Scanner;
+    import java.util.*;
 
     import static bibliotheque.utilitaires.Utilitaire.*;
 
@@ -22,9 +20,15 @@
         @Override
         public void setListDatas(List<T> ldatas) {
             this.ldatas = ldatas;
+
+            ldatas.sort((o1, o2) -> tri(o1,o2));
+            //ldatas.sort(this::tri);
             affListe(ldatas);
             menu();
         }
+
+        public abstract int tri(T o1, T o2);
+
 
         @Override
         public void affMsg(String msg) {

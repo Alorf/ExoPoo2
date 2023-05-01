@@ -11,6 +11,11 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class RayonViewConsole extends AbstractViewConsole<Rayon> implements SpecialRayonViewConsole {
     @Override
+    public int tri(Rayon o1, Rayon o2) {
+        return ((Rayon) o1).getCodeRayon().compareTo(((Rayon) o2).getCodeRayon());
+    }
+
+    @Override
     protected void rechercher() {
       System.out.println("code du rayon : ");
       String code = sc.nextLine();

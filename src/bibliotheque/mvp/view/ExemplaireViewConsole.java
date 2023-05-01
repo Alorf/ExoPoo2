@@ -12,6 +12,11 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class ExemplaireViewConsole extends AbstractViewConsole<Exemplaire> implements SpecialExemplaireViewConsole {
     @Override
+    public int tri(Exemplaire o1, Exemplaire o2) {
+        return ((Exemplaire) o1).getMatricule().compareTo(((Exemplaire) o2).getMatricule());
+    }
+
+    @Override
     protected void rechercher() {
         try{
             System.out.println("matricule : ");

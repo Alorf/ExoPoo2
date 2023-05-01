@@ -115,5 +115,4 @@ public class Auteur  {
         }
         return lot;
     }
-
 }

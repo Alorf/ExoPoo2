@@ -15,6 +15,11 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements SpecialOuvrageViewConsole {
     @Override
+    public int tri(Ouvrage o1, Ouvrage o2) {
+        return ((Ouvrage) o1).getTitre().compareTo(((Ouvrage) o2).getTitre());
+    }
+
+    @Override
     protected void rechercher() {
       //TODO rechercher ouvrage
     }

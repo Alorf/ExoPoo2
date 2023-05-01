@@ -57,6 +57,15 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> implements 
         affListe(ldatas);
     }
 
+    @Override
+    public int tri(Lecteur o1, Lecteur o2) {
+        System.out.println("test");
+        String a = ((Lecteur) o1).getNom() + "" + ((Lecteur) o1).getPrenom();
+        String b = ((Lecteur) o2).getNom() + "" + ((Lecteur) o2).getPrenom();
+
+        return a.compareTo(b);
+    }
+
     protected  void retirer() {
         int choix = choixElt(ldatas);
         Lecteur lecteur = ldatas.get(choix-1);

@@ -14,6 +14,11 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class LocationViewConsole extends AbstractViewConsole<Location> implements SpecialLocationViewConsole {
     @Override
+    public int tri(Location o1, Location o2) {
+        return 0;
+    }
+
+    @Override
     protected void rechercher() {
 
     }
