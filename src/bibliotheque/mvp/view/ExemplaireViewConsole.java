@@ -6,14 +6,19 @@ import bibliotheque.mvp.presenter.SpecialExemplairePresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class ExemplaireViewConsole extends AbstractViewConsole<Exemplaire> implements SpecialExemplaireViewConsole {
     @Override
-    public int tri(Exemplaire o1, Exemplaire o2) {
-        return ((Exemplaire) o1).getMatricule().compareTo(((Exemplaire) o2).getMatricule());
+    public Comparator<Exemplaire> tri() {
+        Comparator<Exemplaire> cmp = (o1, o2) ->
+                o1.getMatricule().compareTo(o2.getMatricule());
+
+        return cmp;
+        //return ((Exemplaire) o1).getMatricule().compareTo(((Exemplaire) o2).getMatricule());
     }
 
     @Override

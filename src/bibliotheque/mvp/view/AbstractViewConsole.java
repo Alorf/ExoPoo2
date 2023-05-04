@@ -21,13 +21,16 @@
         public void setListDatas(List<T> ldatas) {
             this.ldatas = ldatas;
 
-            ldatas.sort((o1, o2) -> tri(o1,o2));
+            try{
+                ldatas.sort(tri());
+            }catch(Exception e){
+            }
             //ldatas.sort(this::tri);
             affListe(ldatas);
             menu();
         }
 
-        public abstract int tri(T o1, T o2);
+        public abstract Comparator<T> tri();
 
 
         @Override

@@ -100,19 +100,21 @@ public class Auteur  {
     }
     public List<Livre> listerLivres(TypeLivre tl){
         List<Livre>ll = new ArrayList<>();
-        for(Ouvrage o : louvrage){
+        louvrage.stream().filter(o -> o.getTo().equals(LIVRE)).forEach(l -> ll.add((Livre) l));
+        /*for(Ouvrage o : louvrage){
             if(o.getTo().equals(LIVRE)) {
                 Livre l = (Livre)o;
                 if(l.getTl().equals(tl)) ll.add(l);
             }
-        }
+        }*/
         return ll;
     }
     public List<Ouvrage> listerOuvrages(String genre){
         List<Ouvrage> lot = new ArrayList<>();
-        for(Ouvrage o : louvrage){
+        louvrage.stream().filter(l -> l.getGenre().equals(genre)).forEach(l -> lot.add(l));
+        /*for(Ouvrage o : louvrage){
             if(o.getGenre().equals(genre)) lot.add(o);
-        }
+        }*/
         return lot;
     }
 }

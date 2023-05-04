@@ -5,43 +5,41 @@ import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class LecteurModelV2 implements DAO<Lecteur>,SpecialLecteur {
     private int numcli = 0;
     private List<Lecteur> ldatas = new ArrayList<>();
-    private HashMap<String, Lecteur> HMdatas = new HashMap<>();
     private int numLecteur = 0;
 
 
     @Override
     public boolean remove(Lecteur elt) {
-        Lecteur lec = HMdatas.remove(elt.getMail());
-        return lec != null;
+        return ldatas.remove(elt);
     }
 
     @Override
     public Lecteur update(Lecteur elt) {
-        Lecteur lec = HMdatas.get(elt.getMail());
-        if (lec == null) return null;
-        HMdatas.remove(elt.getMail());
-        HMdatas.put(elt.getMail(), elt);
+        int p = ldatas.indexOf(elt);
+        if (p < 0) return null;
+        ldatas.set(p, elt);
         return elt;
     }
 
     @Override
     public Lecteur read(Lecteur rech) {
-        return HMdatas.get(rech.getMail());
+        int p = ldatas.indexOf(rech);
+        if(p<0) return null;
+        return ldatas.get(p);
     }
 
     @Override
     public List<Lecteur> getAll() {
-        return new ArrayList<>(HMdatas.values());
+        return ldatas;
     }
     public Lecteur add(Lecteur nl){
-        if(HMdatas.get(nl.getMail()) != null) return null;
-        HMdatas.put(nl.getMail(), nl);
+        if(ldatas.contains(nl)) return null;
+        ldatas.add(nl);
         nl.setNumlecteur(++numLecteur);
         return  nl;
     }
@@ -54,5 +52,10 @@ public class LecteurModelV2 implements DAO<Lecteur>,SpecialLecteur {
     @Override
     public List<Exemplaire> exemplairesLoues(Lecteur l) {
         return new ArrayList<>(l.listerExemplairesLoues());
+    }
+
+    @Override
+    public Lecteur lecParMail(String mail) {
+        return null;
     }
 }

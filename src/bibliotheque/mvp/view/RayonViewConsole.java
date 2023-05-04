@@ -5,14 +5,18 @@ import bibliotheque.mvp.presenter.SpecialRayonPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class RayonViewConsole extends AbstractViewConsole<Rayon> implements SpecialRayonViewConsole {
     @Override
-    public int tri(Rayon o1, Rayon o2) {
-        return ((Rayon) o1).getCodeRayon().compareTo(((Rayon) o2).getCodeRayon());
+    public Comparator<Rayon> tri() {
+        Comparator<Rayon> cmp = (o11, o21) ->
+                o11.getGenre().compareTo(o21.getGenre())
+                ;
+        return cmp;
     }
 
     @Override

@@ -9,14 +9,18 @@ import bibliotheque.utilitaires.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements SpecialOuvrageViewConsole {
     @Override
-    public int tri(Ouvrage o1, Ouvrage o2) {
-        return ((Ouvrage) o1).getTitre().compareTo(((Ouvrage) o2).getTitre());
+    public Comparator<Ouvrage> tri() {
+        Comparator<Ouvrage> cmp = (o1, o2) ->
+                o1.getTitre().compareTo(o2.getTitre());
+
+        return cmp;
     }
 
     @Override

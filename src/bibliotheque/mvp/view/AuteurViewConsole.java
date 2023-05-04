@@ -6,6 +6,7 @@ import bibliotheque.mvp.presenter.SpecialAuteurPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
@@ -13,11 +14,12 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements SpecialAuteurViewConsole {
     @Override
-    public int tri(Auteur o1, Auteur o2) {
-        String a = ((Auteur) o1).getNom() + " " + ((Auteur) o1).getPrenom();
-        String b = ((Auteur) o2).getNom() + " " + ((Auteur) o2).getPrenom();
-
-        return a.compareTo(b);
+    public Comparator<Auteur> tri() {
+        Comparator<Auteur> cmp = (o1, o2) ->
+            o1.getNom().compareTo(o2.getNom())
+        ;
+        return cmp.thenComparing((o1, o2) ->
+            o1.getPrenom().compareTo(o2.getPrenom()));
     }
 
     @Override

@@ -8,14 +8,15 @@ import bibliotheque.mvp.presenter.SpecialLocationPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class LocationViewConsole extends AbstractViewConsole<Location> implements SpecialLocationViewConsole {
     @Override
-    public int tri(Location o1, Location o2) {
-        return 0;
+    public Comparator<Location> tri() {
+        return null;
     }
 
     @Override
