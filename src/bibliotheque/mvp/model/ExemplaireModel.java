@@ -2,7 +2,9 @@ package bibliotheque.mvp.model;
 
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
+import bibliotheque.metier.Mail;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ExemplaireModel extends AbstractModel<Exemplaire> implements SpecialExemplaire {
@@ -23,12 +25,34 @@ public class ExemplaireModel extends AbstractModel<Exemplaire> implements Specia
 
     @Override
     public void envoiMailLecteurActuel(Exemplaire ex) {
-     //TODO envoi mail lecteur
+        Lecteur lecActuel = lecteurActuel(ex);
+        List<Exemplaire> lecEx = lecActuel.listerExemplairesEnLocation();
+
+        String message = "";
+
+        for (Exemplaire e : lecEx) {
+            message += e.getOuvrage() + "\n";
+        }
+
+        Mail mail = new Mail("Vous avez loué les exemplaires suivants : ", message, LocalDate.now());
+        ex.envoiMailLecteurActuel(mail);
     }
 
     @Override
     public void envoiMailLecteurs(Exemplaire ex) {
-     //TODO envoi mail lecteurs
+        List<Lecteur> tmp = lecteurs(ex);
+
+        for (Lecteur l : tmp) {
+            List<Exemplaire> lecEx = l.listerExemplairesEnLocation();
+            String message = "";
+
+            for (Exemplaire e : lecEx) {
+                message += e.getOuvrage() + "\n";
+            }
+
+            Mail mail = new Mail("Vous avez loué les exemplaires suivants : ", message, LocalDate.now());
+            ex.envoiMailLecteurActuel(mail);
+        }
     }
 
     @Override

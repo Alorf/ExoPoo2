@@ -1,11 +1,17 @@
 package bibliotheque.metier;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+
 public class Mail {
     private String objet;
     private String message;
-    private String dateEnvoi;
+    private LocalDate dateEnvoi;
 
-    public Mail(String objet, String message, String dateEnvoi) {
+    public Mail(String objet, String message, LocalDate dateEnvoi) {
         this.objet = objet;
         this.message = message;
         this.dateEnvoi = dateEnvoi;
@@ -27,11 +33,11 @@ public class Mail {
         this.message = message;
     }
 
-    public String getDateEnvoi() {
+    public LocalDate getDateEnvoi() {
         return dateEnvoi;
     }
 
-    public void setDateEnvoi(String dateEnvoi) {
+    public void setDateEnvoi(LocalDate dateEnvoi) {
         this.dateEnvoi = dateEnvoi;
     }
 
@@ -42,5 +48,20 @@ public class Mail {
                 ", message='" + message + '\'' +
                 ", dateEnvoi='" + dateEnvoi + '\'' +
                 '}';
+    }
+
+    public void envoiMail(Lecteur destinataire){
+        File monFichier = new File(destinataire.getMail()+".txt");
+
+        try(FileWriter fw = new FileWriter(monFichier)){
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println("Objet : "+objet);
+            pw.println(message+"\n\n");
+            pw.println("La bibliothèque, le " + dateEnvoi+"\n\n");
+
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }
